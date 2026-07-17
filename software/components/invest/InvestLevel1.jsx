@@ -42,7 +42,7 @@ const InvestLevel1 = () => {
         <div className="container-fruid">
           <div className="main-content">
             <div className="head-area d-flex align-items-center justify-content-between">
-              <h4>Investment - Level 1</h4>
+            
               <div className="icon-area">
                 <Image src={support_icon} alt="icon" />
               </div>
