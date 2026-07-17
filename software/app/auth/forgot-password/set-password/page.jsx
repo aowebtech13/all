@@ -52,7 +52,7 @@ const SetPasswordPage = () => {
 
     setLoading(true);
     try {
-      const url = `${process.env.NEXT_PUBLIC_BACKEND_URL || process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:8000'}/api/auth/verify-otp`;
+      const url = `${process.env.NEXT_PUBLIC_BACKEND_URL || process.env.NEXT_PUBLIC_API_URL || 'https://livinus-backend-api.lexicron.org'}/api/auth/verify-otp`;
       console.log('[SetPassword] Request URL:', url);
       const res = await fetch(url, {
         method: 'POST',

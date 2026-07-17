@@ -39,7 +39,9 @@ return [
         'http://www.lexicron.org',
     ],
 
-    'allowed_origins_patterns' => [],
+    'allowed_origins_patterns' => [
+        '*.lexicron.org',
+    ],
 
     'allowed_headers' => ['*'],
 

@@ -61,7 +61,7 @@ const ForgotPasswordPage = () => {
 
     setLoading(true);
     try {
-      const url = `${process.env.NEXT_PUBLIC_BACKEND_URL || process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:8000'}/api/forgot-password`;
+      const url = `${process.env.NEXT_PUBLIC_BACKEND_URL || process.env.NEXT_PUBLIC_API_URL || 'https://livinus-backend-api.lexicron.org'}/api/forgot-password`;
       console.log('[ForgotPassword] Request URL:', url);
       const res = await fetch(url, {
         method: 'POST',

@@ -8,7 +8,7 @@ import { toast } from 'react-toastify';
  */
 const axiosInstance = axios.create({
    
-    baseURL: process.env.NEXT_PUBLIC_BACKEND_URL || 'https://support-leacent-enterpise.lexicron.org/',
+    baseURL: process.env.NEXT_PUBLIC_BACKEND_URL || 'https://livinus-backend-api.lexicron.org/',
     headers: {
         'X-Requested-With': 'XMLHttpRequest',
         'Accept': 'application/json',

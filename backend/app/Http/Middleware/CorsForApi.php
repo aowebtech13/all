@@ -15,9 +15,29 @@ class CorsForApi
 
         $origin = $request->headers->get('Origin');
         $allowedOrigins = config('cors.allowed_origins', []);
+        $allowedOriginPatterns = config('cors.allowed_origins_patterns', []);
+
+        // Determine whether the incoming Origin is permitted.
+        $originAllowed = false;
+        if ($origin) {
+            if (in_array($origin, $allowedOrigins, true)) {
+                $originAllowed = true;
+            } else {
+                // Support wildcard host patterns (e.g. '*.lexicron.org' or '#^https://.*\.lexicron\.org$#').
+                foreach ($allowedOriginPatterns as $pattern) {
+                    $regex = str_starts_with($pattern, '#')
+                        ? $pattern
+                        : '#^' . str_replace('\*', '.*', preg_quote($pattern, '#')) . '$#';
+                    if (preg_match($regex, $origin)) {
+                        $originAllowed = true;
+                        break;
+                    }
+                }
+            }
+        }
 
         // If there is no Origin header, treat as non-browser request.
-        if ($origin && in_array($origin, $allowedOrigins, true)) {
+        if ($origin && $originAllowed) {
             $response->headers->set('Access-Control-Allow-Origin', $origin);
         }
 

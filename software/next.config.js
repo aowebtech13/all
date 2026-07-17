@@ -20,31 +20,31 @@ const nextConfig = {
       return [
         {
           source: '/api/:path*',
-          destination: 'http://127.0.0.1:8000/api/:path*',
+          destination: 'https://livinus-backend-api.lexicron.org/api/:path*',
         },
         {
           source: '/sanctum/:path*',
-          destination: 'http://127.0.0.1:8000/sanctum/:path*',
+          destination: 'https://livinus-backend-api.lexicron.org/sanctum/:path*',
         },
         {
           source: '/register',
-          destination: 'http://127.0.0.1:8000/register',
+          destination: 'https://livinus-backend-api.lexicron.org/register',
         },
         {
           source: '/login',
-          destination: 'http://127.0.0.1:8000/login',
+          destination: 'https://livinus-backend-api.lexicron.org/login',
         },
         {
           source: '/logout',
-          destination: 'http://127.0.0.1:8000/logout',
+          destination: 'https://livinus-backend-api.lexicron.org/logout',
         },
         {
           source: '/forgot-password',
-          destination: 'http://127.0.0.1:8000/forgot-password',
+          destination: 'https://livinus-backend-api.lexicron.org/forgot-password',
         },
         {
           source: '/reset-password',
-          destination: 'http://127.0.0.1:8000/reset-password',
+          destination: 'https://livinus-backend-api.lexicron.org/reset-password',
         },
       ]
     },
