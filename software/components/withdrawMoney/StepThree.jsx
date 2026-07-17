@@ -44,10 +44,10 @@ const StepThree = () => {
                         <ul className="details-list">
                           <li>
                             <span>Payment System</span>
-                            <b>Leacent</b>
+                            <b>Ally-b</b>
                           </li>
                           <li>
-                            <span>Leacent Payment Card</span>
+                            <span>Ally-b Payment Card</span>
                             <b>**** **** **** 1182</b>
                           </li>
                           <li>

@@ -13,7 +13,7 @@ const BankInstruction = () => {
         }}
       >
         <p style={{ margin: 0, fontWeight: 700 }}>ECOBANK</p>
-        <p style={{ margin: "6px 0 0" }}>Leacent Entrepreneurial Network</p>
+        <p style={{ margin: "6px 0 0" }}>Ally-b Entrepreneurial Network</p>
         <p style={{ margin: "6px 0 0" }}>Acct Nr: <b>2080100211</b></p>
       </div>
     </div>

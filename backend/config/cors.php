@@ -26,13 +26,13 @@ return [
         'http://127.0.0.1:3000',
 
         // Production (add all frontend origins that call the API)
-        'https://enterprise.leacent.org',
-        'https://support-leacent-enterpise.lexicron.org',
+        'https://enterprise.Ally-b.org',
+        'https://support-Ally-b-enterpise.lexicron.org',
 
         // Existing known domains
         'https://lexicron.org',
         'https://www.lexicron.org',
-        'https://www.partners.Leacent.com',
+        'https://www.partners.Ally-b.com',
         'http://lexicron.org',
         'http://www.lexicron.org',
     ],

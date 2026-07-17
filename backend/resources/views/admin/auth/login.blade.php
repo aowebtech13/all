@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Login - Leacent Finance</title>
+    <title>Admin Login - Ally-b Finance</title>
     <link href="https://cdn.jsdelivr.net/npm/daisyui@4.7.2/dist/full.min.css" rel="stylesheet" type="text/css" />
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -22,7 +22,7 @@
                     <div class="w-12 h-12 bg-white rounded-2xl flex items-center justify-center">
                         <i class="fas fa-landmark text-slate-900 text-xl"></i>
                     </div>
-                    <span class="text-2xl font-black tracking-tighter">Leacent Enterprise</span>
+                    <span class="text-2xl font-black tracking-tighter">Ally-b Enterprise</span>
                 </div>
                 <h1 class="text-5xl font-black mb-8 leading-[1.1]">Financial Inclusion Solutions</h1>
                 <p class="text-lg text-slate-400 leading-relaxed max-w-sm">Empowering Nigerians with seamless digital financial services.</p>

@@ -60,7 +60,7 @@ const StepThree = () => {
       formData.append("receipt", proofFile);
       formData.append(
         "description",
-        `Memebership Fee (${amountLabel}) via ECOBANK Leacent Entrepreneurial Network (Acct 2080100211).`
+        `Memebership Fee (${amountLabel}) via ECOBANK Ally-b Entrepreneurial Network (Acct 2080100211).`
       );
 
       const res = await axios.post("/api/deposit", formData, {
@@ -106,7 +106,7 @@ const StepThree = () => {
                       <Image src={profile_1} alt="image" />
                     </div>
                     <div className="text-area">
-                      <p>Leacent Entrepreneurial Network</p>
+                      <p>Ally-b Entrepreneurial Network</p>
                       <span className="mdr">ECOBANK</span>
                     </div>
                   </div>

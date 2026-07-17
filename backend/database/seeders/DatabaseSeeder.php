@@ -5,6 +5,10 @@ namespace Database\Seeders;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+
+use Database\Seeders\InvestmentGroupSeeder;
+use Database\Seeders\InvestmentSeeder;
+use Database\Seeders\WithdrawalSeeder;
 use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
@@ -20,6 +24,9 @@ class DatabaseSeeder extends Seeder
             InvestmentPlanSeeder::class,
             PartnershipSeeder::class,
             DemoUsersSeeder::class,
+            InvestmentGroupSeeder::class,
+            InvestmentSeeder::class,
+            WithdrawalSeeder::class,
         ]);
     }
 }

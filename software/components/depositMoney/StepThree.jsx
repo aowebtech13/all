@@ -104,7 +104,7 @@ const StepThree = () => {
                         <ul className="details-list">
                          
                           <li>
-                            <span>Leacent Payment Card</span>
+                            <span>Ally-b Payment Card</span>
                             <b>{maskedCard}</b>
                           </li>
                           <li>

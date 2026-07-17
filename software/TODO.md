@@ -1,12 +1,7 @@
-# TODO
+# TODO - Seeding fix
 
-## Investment + Withdrawal frontend (3 levels, 20% returns)
-- [x] Add Next.js pages/routes: `/invest/level-1..3` and `/invest/withdraw`
-- [x] Add components/UI: `InvestLevel1/2/3` (20% returns) and `InvestWithdraw`
-- [x] Hook new routes into left sidebar (`leftSideMenuData.js`)
+- [ ] Update `backend/database/seeders/DemoUsersSeeder.php` to avoid UNIQUE constraint failures on `users.lxp_id` during `php artisan db:seed`.
+- [ ] Make seeder idempotent by selecting existing user by `email` first, then by `lxp_id`, and *skipping* demo/admin insertion when `lxp_id` is already taken (per user request).
+- [x] Re-run `php artisan db:seed --class=DatabaseSeeder` and confirm seeding completes.
 
-- [x] Gate menu visibility via existing email verification logic (extend `menuState.enabled` if needed)
-
-- [ ] Lint + build
-- [ ] Smoke test routes in browser
 
