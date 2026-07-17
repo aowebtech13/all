@@ -1,0 +1,6 @@
+Pending implementation: add CorsForApi as global middleware for api routes in backend/bootstrap/app.php.
+
+Action planned:
+- Import App\Http\Middleware\CorsForApi
+- Add $middleware->addGlobal([...]) or equivalent for api group depending on Laravel version.
+

@@ -1,0 +1,34 @@
+/*============================================ 
+# Template Name: Leacent Admin Dashboard
+# Version: 1.0
+# Date: 11/03/2023
+# Author: pixelaxis
+# Author URI: https://themeforest.net/user/pixelaxis/portfolio
+# Developed By: Mks Tamin
+# Description: Leacent Enterprise Fund  is your gateway to Agency Banking, Money Transfers, and Bill Payments!
+============================================*/
+
+/*============================================ 
+======== Table of Css Content =========
+# Typography
+# Normalize 
+# Global style
+# Header Area
+# Banner Area
+# Section Area
+# Footer Area
+============================================*/
+
+// Bootstrap
+@import "/node_modules/bootstrap/scss/bootstrap.scss";
+
+// Sass Global
+@import "./main/_global.scss";
+
+// Pages
+@import "./pages/_banner-footer.scss";
+@import "./pages/_section.scss";
+@import "./pages/_auth.scss";
+
+// Responsive Area
+@import "./main/_responsive.scss";
