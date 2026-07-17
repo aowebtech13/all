@@ -22,3 +22,9 @@
 Homestead.json
 Homestead.yaml
 Thumbs.db
+
+# Laravel generated caches — must NOT be committed/deployed (stale caches break boot)
+/bootstrap/cache/*.php
+/bootstrap/cache/services.php
+/bootstrap/cache/packages.php
+/bootstrap/cache/config.php
