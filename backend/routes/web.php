@@ -73,15 +73,6 @@ Route::get('/login', function () {
 Route::prefix('geyfdv')->group(function () {
     Route::get('/password/forgot', [AdminWebController::class, 'showForgotForm'])->name('admin.password.forgot');
 
-    // Avoid 419 Page Expired on admin login due to CSRF/session issues.
-    // Only applies to POST /geyfdv/login.
-    Route::post('/login', [AdminWebController::class, 'login'])
-        ->middleware('web')
-        ->withoutMiddleware([
-            \App\Http\Middleware\VerifyCsrfToken::class,
-            \App\Http\Middleware\EncryptCookies::class,
-        ]);
-
     Route::post('/password/forgot', [AdminWebController::class, 'sendResetToken']);
     Route::get('/password/reset', [AdminWebController::class, 'showResetForm'])->name('admin.password.reset');
     Route::post('/password/reset', [AdminWebController::class, 'resetPassword']);
