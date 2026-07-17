@@ -435,7 +435,7 @@
     }
     &.recipients {
       .filters-item {
-        background: #43A05B;
+        background: #864ffe;
         padding: 20px 30px;
         gap: 20px;
         .right-area {
@@ -579,7 +579,7 @@
               &:hover {
                 background: linear-gradient(
                   117.39deg,
-                  #43A05B 13.65%,
+                  #864ffe 13.65%,
                   #9a79fd 105.93%
                 );
                 i {
@@ -627,7 +627,7 @@
               position: relative;
               transition: 0.3s;
               &:hover {
-                background: #43A05B;
+                background: #864ffe;
                 color: var(--bs-white);
                 &::before {
                   position: absolute;
@@ -744,7 +744,7 @@
               width: 50px;
               height: 50px;
               left: -30px;
-              background-color: #43A05B;
+              background-color: #864ffe;
               border: 6px solid var(--bs-white);
               border-radius: 25px;
             }
@@ -865,7 +865,7 @@
             padding: 12px 45px;
             transition: 0.3s;
             &:hover {
-              background: #43A05B;
+              background: #864ffe;
               color: var(--bs-white);
             }
           }
@@ -1028,11 +1028,11 @@
       padding: 12px 40px;
       transition: 0.3s;
       &:hover {
-        background: #43A05B;
+        background: #864ffe;
         color: var(--bs-white);
       }
       &.active {
-        background: #43A05B;
+        background: #864ffe;
         color: var(--bs-white);
         &:hover {
           background: #f7f9fd;
@@ -1381,7 +1381,7 @@
           height: 50px;
           left: calc(50%);
           top: -35px;
-          background-color: #43A05B;
+          background-color: #864ffe;
           border: 6px solid var(--bs-white);
           border-radius: 25px;
         }
@@ -1668,7 +1668,7 @@
         font-weight: 600;
         margin-left: 10px;
         a {
-          color: #43A05B;
+          color: #864ffe;
           font-weight: 600;
         }
       }
@@ -1691,7 +1691,7 @@
     &::before {
       content: "";
       position: absolute;
-      background: #43A05B;
+      background: #864ffe;
       top: 0;
       left: 0;
       height: 270px;
@@ -1769,7 +1769,7 @@
         transition: 0.3s;
         &.active {
           color: var(--bs-white);
-          background: #43A05B;
+          background: #864ffe;
           box-shadow: 0px 8px 24px rgba(89, 39, 227, 0.42);
         }
       }
@@ -1898,7 +1898,7 @@
         transition: 0.3s;
         &:hover,
         &.active {
-          background: #43A05B;
+          background: #864ffe;
           color: var(--bs-white);
         }
       }
@@ -2058,7 +2058,7 @@
         content: "";
         width: 100%;
         height: 20%;
-        background: #43A05B;
+        background: #864ffe;
         top: 0;
         left: 0;
         z-index: -1;
@@ -2079,7 +2079,7 @@
             display: flex;
             align-items: center;
             .btn-link {
-              color: #43A05B;
+              color: #864ffe;
               margin-right: 20px;
             }
             button {
@@ -2101,7 +2101,7 @@
         .history {
           font-weight: 600;
           span {
-            color: #43A05B;
+            color: #864ffe;
           }
         }
         li {
@@ -2434,7 +2434,7 @@
             }
           }
           button {
-            background: #43A05B;
+            background: #864ffe;
             border: 1px solid #aaa9e3;
             display: flex;
             border-radius: 10px;
@@ -2448,7 +2448,7 @@
     }
     #success {
       .modal-content {
-        background: #43A05B;
+        background: #864ffe;
         width: 180%;
       }
       .modal-header {
@@ -2500,7 +2500,7 @@
     }
   }
   .modal-content {
-    background: #43A05B;
+    background: #864ffe;
     border-radius: 20px;
   }
   .modal-dialog {
@@ -2679,7 +2679,7 @@
             }
             &:hover,
             &.active {
-              background: #43A05B;
+              background: #864ffe;
               color: var(--bs-white);
             }
           }

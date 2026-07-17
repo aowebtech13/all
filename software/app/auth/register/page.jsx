@@ -19,7 +19,7 @@ const RegisterPage = () => {
     phone: '',
     password: '',
     confirmPassword: '',
-    coopCategory: ''
+ 
   });
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
@@ -54,7 +54,6 @@ const RegisterPage = () => {
       phone: formData.phone,
       password: formData.password,
       password_confirmation: formData.confirmPassword,
-      coop_category: formData.coopCategory, // <-- Mapped into snake_case for your Laravel backend validation
       source: 'enterprise',
       setErrors,
     })
@@ -106,36 +105,6 @@ const RegisterPage = () => {
             {errors.email && <div className="error">{errors.email[0]}</div>}
           </div>
 
-          <div className="form-group">
-            <label>Leacent Industrial Cooperatives Group</label>
-            <select
-              name="coopCategory"
-              value={formData.coopCategory || ""}
-              onChange={handleChange}
-              style={{
-                border: '1px solid #E5E7EB',
-                borderRadius: '12px',
-                padding: '15px 10px',
-                width: '100%',
-                backgroundColor: '#ffffff'
-              }}
-            >
-              <option value="" disabled>Select your preferred category</option>
-              <option value="youth">Leacent Youth Coop</option>
-              <option value="adult">Leacent Adult Coop</option>
-              <option value="women">Leacent Women Coop</option>
-              <option value="oyo_spring">Oyo Spring Multipurpose Coop</option>
-              <option value="osun_spring">Osun Spring Multipurpose Coop</option>
-              <option value="kwara_spring">Kwara Spring Multipurpose Cooperative</option>
-              <option value="existing">Existing Coop/Association</option>
-            </select>
-            {/* Standardized fallback matching snake_case or camelCase backend responses */}
-            {(errors.coop_category || errors.coopCategory) && (
-              <div className="error">
-                {errors.coop_category ? errors.coop_category[0] : errors.coopCategory[0]}
-              </div>
-            )}
-          </div>
 
           <div className="form-group">
             <label>Age</label>
@@ -156,7 +125,7 @@ const RegisterPage = () => {
             <label>Phone Number</label>
             <div style={{ display: 'flex', alignItems: 'center', gap: 0 }}>
               <span style={{ padding: '0 5px', border: '1px solid #d1d5db', borderRight: 'none', borderRadius: '4px 0 0 4px', height: '38px', display: 'flex', alignItems: 'center', background: '#f3f4f6', fontWeight: 600 }}>
-                +234
+                +39
               </span>
               <input
                 type="tel"

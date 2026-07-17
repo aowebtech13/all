@@ -5,7 +5,7 @@
     min-height: 100vh;
     display: flex;
     padding: 2rem 1rem;
-    background: linear-gradient(135deg, #43a05b 0%, #2d8b4f 100%);
+    background: linear-gradient(135deg, #864ffe 0%, #2d8b4f 100%);
 
     @media (min-width: 992px) {
       .register-image {
@@ -46,7 +46,7 @@
   align-items: center;
   justify-content: center;
   padding: 1rem 1rem;
-  background: linear-gradient(135deg, #43a05b 0%, #2d8b4f 100%);
+  background: linear-gradient(135deg, #5B21B6 0%, #8B5CF6 40%, #EDE9FE 100%);
 
   @media (min-width: 992px) {
     .register-container & {
@@ -73,7 +73,7 @@
       h2 {
         font-size: 2rem;
         font-weight: 700;
-        color: #43a05b;
+        color: #864ffe;
         margin-bottom: 0.5rem;
       }
 
@@ -108,7 +108,7 @@
 
           &:focus {
             outline: none;
-            border-color: #43a05b;
+            border-color: #864ffe;
             box-shadow: 0 0 0 3px rgba(67, 160, 91, 0.1);
             background: white;
             transform: translateY(-1px);
@@ -123,7 +123,7 @@
       .cmn-btn {
         width: 100%;
         padding: 1.1rem;
-        background: linear-gradient(135deg, #43a05b 0%, #36a25b 100%);
+        background: linear-gradient(135deg, #864ffe);
         color: white;
         border: none;
         border-radius: 12px;
@@ -181,7 +181,7 @@
         border-top: 1px solid #e5e7eb;
 
         a {
-          color: #43a05b;
+          color: #864ffe;
           text-decoration: none;
           font-weight: 600;
 

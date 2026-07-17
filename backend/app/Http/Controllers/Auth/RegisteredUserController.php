@@ -11,6 +11,7 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\Rules;
 
 use Illuminate\Validation\ValidationException;
@@ -34,7 +35,8 @@ class RegisteredUserController extends Controller
 
                 // Registration form completeness enforcement.
                 // If coop_category is not provided, we MUST NOT trigger email verification.
-                'coop_category' => ['required', 'string', 'max:255'],
+                // NOTE: coop_category is optional now; category selection was removed from the registration flow.
+                'coop_category' => ['nullable', 'string', 'max:255'],
 
 
                 'source' => ['nullable', 'string', 'max:255'],
@@ -48,13 +50,13 @@ class RegisteredUserController extends Controller
             $rawPhone = is_string($rawPhone) ? trim($rawPhone) : '';
 
 
-            // Add +234 prefix if the number is provided without country code.
-            if (!str_starts_with($rawPhone, '+234')) {
+            // Add +39 prefix if the number is provided without country code.
+            if (!str_starts_with($rawPhone, '+39')) {
                 $digitsOnly = preg_replace('/\D+/', '', $rawPhone);
                 if (str_starts_with($digitsOnly, '0')) {
                     $digitsOnly = substr($digitsOnly, 1);
                 }
-                $rawPhone = '+234' . $digitsOnly;
+                $rawPhone = '+39' . $digitsOnly;
             }
 
 

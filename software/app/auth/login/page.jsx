@@ -65,7 +65,7 @@ const LoginPage = () => {
       <div className="auth-card">
         <div className="auth-header">
             <Image 
-              src="https://res.cloudinary.com/djme9spdc/image/upload/v1776336428/WhatsApp_Image_2026-04-16_at_01.22.33_njjnnn.jpg" 
+              src="https://res.cloudinary.com/djme9spdc/image/upload/v1784264310/logo-b_ttgqlm.png" 
               height={20} 
               width={120} 
               alt="Logo"

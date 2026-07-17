@@ -5,7 +5,7 @@ import { PaylioContext } from "@/context/context";
 import axiosInstance from "@/lib/axios";
 
 const countryCode = [
-  { id: 1, name: "+234" },
+  { id: 1, name: "+39" },
 
 ];
 
