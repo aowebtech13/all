@@ -5,7 +5,8 @@ import deleteIcon from "/public/images/icon/delete.png";
 import request_funds from "/public/images/icon/request-funds.png";
 import send_funds from "/public/images/icon/send-funds.png";
 import transfer_limit from "/public/images/icon/transfer-limit.png";
-import recipients_user from "/public/images/recipients-user.png";
+import recipients_user from "/public/images/owner-profile.png";
+
 
 const CardRecipients = () => {
   return (

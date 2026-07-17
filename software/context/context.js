@@ -138,17 +138,19 @@ const PaylioProvider = ({ children }) => {
     setMenuState({
       allowed: true,
       enabled: {
-        dashboard: true,
-        transactions: true,
-        pay: false, // hide verification card
-        receive: true,
-        loans: true,
-        recipients: true,
-        depositMoney: true,
-        withdrawMoney: true,
-      },
-    });
+          dashboard: true,
+          transactions: true,
+          pay: false, // hide verification card
+          receive: true,
+          loans: true,
+          recipients: true,
+          depositMoney: true,
+          withdrawMoney: true,
+          invest: true,
+        },
+      });
   }, [user]);
+
 
   // Notifications for dashboard (guarded)
   useEffect(() => {

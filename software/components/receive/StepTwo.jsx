@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useContext } from "react";
 import Select from "../select/Select";
 import support_icon from "/public/images/icon/support-icon.png";
-import profile_2 from "/public/images/profile-2.png";
+const profile_2 = "/images/profile-1.png";
 
 const currency = [
   { id: 1, name: "USD" },

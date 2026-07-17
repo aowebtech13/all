@@ -4,7 +4,7 @@ import { FaCaretRight } from "react-icons/fa";
 import { useContext } from "react";
 import { PaylioContext } from "@/context/context";
 import bell from "/public/images/icon/bell.png";
-import user_1 from "/public/images/user-1.png";
+const user_1 = "/images/user-1.png";
 
 const NotificationsArea = () => {
   const { notifications, unreadCount, setUnreadCount, fetchNotifications } = useContext(PaylioContext);

@@ -43,6 +43,35 @@ const leftSideMenuData = [
     name: "Recipients",
     url: "/recipients",
   },
+
+  {
+    id: 7,
+    icon: <i className="icon-pay"></i>,
+    path: "invest",
+    name: "Invest Level 1",
+    url: "/invest/level-1",
+  },
+  {
+    id: 10,
+    icon: <i className="icon-pay"></i>,
+    path: "invest",
+    name: "Invest Level 2",
+    url: "/invest/level-2",
+  },
+  {
+    id: 11,
+    icon: <i className="icon-pay"></i>,
+    path: "invest",
+    name: "Invest Level 3",
+    url: "/invest/level-3",
+  },
+  {
+    id: 12,
+    icon: <i className="icon-withdraw"></i>,
+    path: "invest-withdraw",
+    name: "Withdraw Investment",
+    url: "/invest/withdraw",
+  },
   
   {
     id: 8,
@@ -59,5 +88,6 @@ const leftSideMenuData = [
     url: "/withdraw-money/step-1",
   },
 ];
+
 
 export default leftSideMenuData;

@@ -1,14 +1,12 @@
-# TODO - Rename routes to `/auth/*`
+# TODO
 
-## Plan confirmation
-- [x] Enforce auth via `enterprise/components/AuthGuard.js`
-- [x] Improve API login error JSON handling in `backend/app/Http/Controllers/Auth/AuthenticatedSessionController.php`
+## Investment + Withdrawal frontend (3 levels, 20% returns)
+- [x] Add Next.js pages/routes: `/invest/level-1..3` and `/invest/withdraw`
+- [x] Add components/UI: `InvestLevel1/2/3` (20% returns) and `InvestWithdraw`
+- [x] Hook new routes into left sidebar (`leftSideMenuData.js`)
 
-## Route rename refactor (`/pay` -> `/auth/pay`, etc.)
-- [ ] Create mapping for all top-level pages under `enterprise/app/**`
-- [ ] Move/duplicate Next.js page folders to `enterprise/app/auth/**` equivalents
-- [ ] Update all `router.push(...)` and `<Link href="...">` references across `enterprise/components/**` and `enterprise/app/**`
-- [ ] Update any guard logic relying on pathname prefixes
-- [ ] Validate build by searching for old route strings
-- [ ] Smoke test key routes: `/auth/login`, `/auth/pay-step/step-1`, `/auth/pay/step-3`, `/auth/dashboard`
+- [x] Gate menu visibility via existing email verification logic (extend `menuState.enabled` if needed)
+
+- [ ] Lint + build
+- [ ] Smoke test routes in browser
 

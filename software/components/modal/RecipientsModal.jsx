@@ -2,7 +2,11 @@ import Image from "next/image";
 import { FaTimes } from "react-icons/fa";
 import company_icon from "/public/images/icon/company-icon.png";
 import individual_icon from "/public/images/icon/individual-icon.png";
-import user_profile from "/public/images/user-profile.png";
+import user_profile from "/public/images/owner-profile.png";
+
+// NOTE: next/image requires width/height or `fill` when using string src paths.
+// We import the file so Next can infer metadata and avoid runtime width errors.
+
 
 const RecipientsModal = () => {
   return (
@@ -67,8 +71,8 @@ const RecipientsModal = () => {
                       role="tabpanel"
                       aria-labelledby="company-tab1"
                     >
-                      <div className="image-area mt-30 text-center">
-                        <Image src={user_profile} alt="icon" />
+<div className="image-area mt-30 text-center">
+                        <Image src={user_profile} alt="icon" width={120} height={120} />
                       </div>
                       <form action="#">
                         <div className="row justify-content-center">
@@ -146,7 +150,7 @@ const RecipientsModal = () => {
                       aria-labelledby="individual-tab1"
                     >
                       <div className="image-area mt-30 text-center">
-                        <Image src={user_profile} alt="icon" />
+                        <Image src={user_profile} alt="icon" width={120} height={120} />
                       </div>
                       <form action="#">
                         <div className="row justify-content-center">
