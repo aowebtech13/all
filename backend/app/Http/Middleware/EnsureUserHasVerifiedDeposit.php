@@ -71,7 +71,7 @@ class EnsureUserHasVerifiedDeposit
 
         if (! $request->user()->hasConfirmedVerificationDeposit()) {
             return response()->json([
-                'message' => 'Verification deposit required. Please deposit ₦5,000 to continue.',
+                'message' => 'Verification deposit required. Please deposit $500 to continue.',
                 'required_amount' => 5000,
             ], 402);
         }

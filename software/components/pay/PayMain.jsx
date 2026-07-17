@@ -12,14 +12,14 @@ const paymentData = [
     id: 1,
     icon: paylio_account_icon,
     title: "Account Verification",
-    pay: "Pay ₦5000 to verify",
+    pay: "Pay $500 to verify",
     link: "/pay/verify",
   },
   {
     id: 2,
     icon: paylio_account_icon,
-    title: "To a Another Enterprise Account",
-    pay: "Pay for free",
+    title: "To a Another Account",
+    pay: "for free",
     link: "/pay/step-1",
   },
 ];

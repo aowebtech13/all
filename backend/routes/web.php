@@ -3,9 +3,65 @@
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Admin\AdminWebController;
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\Auth\RegisteredUserController;
+use App\Http\Controllers\Auth\PasswordResetLinkController;
+use App\Http\Controllers\Auth\NewPasswordController;
+use App\Http\Controllers\Api\PasswordResetController;
 
 Route::get('/', function () {
     return ['Laravel' => app()->version()];
+});
+
+/*
+ * Backwards-compatible API auth endpoints.
+ *
+ * Some deployed frontend builds call these routes WITHOUT the `/api` prefix
+ * (e.g. `auth/login`), which previously returned a 404. These mirror the
+ * routes defined in routes/auth.php but are served from the web router using
+ * the stateless `api` middleware so they behave identically to the API.
+ */
+Route::middleware(['api', 'throttle:api'])
+    ->withoutMiddleware([
+        \App\Http\Middleware\VerifyCsrfToken::class,
+        \Illuminate\Cookie\Middleware\EncryptCookies::class,
+        \Illuminate\Session\Middleware\StartSession::class,
+        \Illuminate\View\Middleware\ShareErrorsFromSession::class,
+    ])
+    ->group(function () {
+    Route::post('/login', [AuthenticatedSessionController::class, 'store']);
+    Route::post('/register', [RegisteredUserController::class, 'store']);
+    Route::post('/forgot-password', [PasswordResetLinkController::class, 'store']);
+    Route::post('/reset-password', [NewPasswordController::class, 'store']);
+    Route::post('/forgot-password-otp', [PasswordResetController::class, 'sendOTP']);
+    Route::post('/verify-otp', [PasswordResetController::class, 'verifyOTP']);
+    Route::post('/reset-password-with-otp', [PasswordResetController::class, 'resetPassword']);
+    Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])
+        ->middleware('auth:sanctum');
+});
+
+/*
+ * Some deployed frontend builds call auth endpoints under an `/auth` prefix
+ * (e.g. `auth/login`), which previously returned a 404. Mirror the same
+ * endpoints under `/auth` for backwards compatibility.
+ */
+Route::middleware(['api', 'throttle:api'])
+    ->withoutMiddleware([
+        \App\Http\Middleware\VerifyCsrfToken::class,
+        \Illuminate\Cookie\Middleware\EncryptCookies::class,
+        \Illuminate\Session\Middleware\StartSession::class,
+        \Illuminate\View\Middleware\ShareErrorsFromSession::class,
+    ])
+    ->prefix('auth')->group(function () {
+    Route::post('/login', [AuthenticatedSessionController::class, 'store']);
+    Route::post('/register', [RegisteredUserController::class, 'store']);
+    Route::post('/forgot-password', [PasswordResetLinkController::class, 'store']);
+    Route::post('/reset-password', [NewPasswordController::class, 'store']);
+    Route::post('/forgot-password-otp', [PasswordResetController::class, 'sendOTP']);
+    Route::post('/verify-otp', [PasswordResetController::class, 'verifyOTP']);
+    Route::post('/reset-password-with-otp', [PasswordResetController::class, 'resetPassword']);
+    Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])
+        ->middleware('auth:sanctum');
 });
 
 // Public Admin Auth Routes

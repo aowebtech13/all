@@ -72,7 +72,7 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
         setStatus?.(null);
 
         const response = await axios
-            .post('auth/login', props, { headers: getAuthHeader() })
+            .post('/api/login', props, { headers: getAuthHeader() })
             .catch((error) => {
                 if (error.response?.status !== 422) {
                     console.error('Login error:', error);

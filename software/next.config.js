@@ -28,23 +28,23 @@ const nextConfig = {
         },
         {
           source: '/register',
-          destination: 'https://livinus-backend-api.lexicron.org/register',
+          destination: 'https://livinus-backend-api.lexicron.org/api/register',
         },
         {
           source: '/login',
-          destination: 'https://livinus-backend-api.lexicron.org/login',
+          destination: 'https://livinus-backend-api.lexicron.org/api/login',
         },
         {
           source: '/logout',
-          destination: 'https://livinus-backend-api.lexicron.org/logout',
+          destination: 'https://livinus-backend-api.lexicron.org/api/logout',
         },
         {
           source: '/forgot-password',
-          destination: 'https://livinus-backend-api.lexicron.org/forgot-password',
+          destination: 'https://livinus-backend-api.lexicron.org/api/forgot-password',
         },
         {
           source: '/reset-password',
-          destination: 'https://livinus-backend-api.lexicron.org/reset-password',
+          destination: 'https://livinus-backend-api.lexicron.org/api/reset-password',
         },
       ]
     },
