@@ -19,7 +19,7 @@ const TransactionTabel = ({ transactions = [], loading, refreshData }) => {
   const formatCurrency = (amount) => {
     return new Intl.NumberFormat('en-NG', {
       style: 'currency',
-      currency: 'NGN',
+      currency: 'USD',
     }).format(amount || 0);
   };
 

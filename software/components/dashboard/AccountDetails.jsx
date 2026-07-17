@@ -5,7 +5,7 @@ import option from "/public/images/icon/option.png";
 import { useAuth } from "@/hooks/useAuth";
 
 const currency = [
-  { id: 1, name: "Naira" },
+  { id: 1, name: "Dollar" },
 ];
 
 const AccountDetails = ({ dashboardData, loading }) => {
@@ -14,7 +14,7 @@ const AccountDetails = ({ dashboardData, loading }) => {
   const formatCurrency = (amount) => {
     return new Intl.NumberFormat('en-NG', {
       style: 'currency',
-      currency: 'NGN',
+      currency: 'USD',
     }).format(amount || 0);
   };
 

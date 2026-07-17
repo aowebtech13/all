@@ -19,7 +19,7 @@ const StepThree = () => {
     fromAmount = 0,
     fromCurrency = "USD",
     toAmount = 0,
-    toCurrency = "NGN",
+    toCurrency = "GBP",
     rate = 0,
     fee = 0,
     totalToPay = 0,

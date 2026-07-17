@@ -9,12 +9,12 @@ import axiosInstance from "@/lib/axios";
 
 const currencySend = [
   { id: 1, name: "USD" },
-  { id: 2, name: "NGN" },
+  { id: 2, name: "GBP" },
 ];
 
 const currencyGet = [
   { id: 1, name: "USD" },
-  { id: 2, name: "NGN" },
+  { id: 2, name: "GBP" },
 ];
 
 const deliveryMethod = [
@@ -38,7 +38,7 @@ const StepOne = () => {
   const [feePercentage, setFeePercentage] = useState(2.5);
   const [fromAmount, setFromAmount] = useState(400);
   const [fromCurrency, setFromCurrency] = useState("USD");
-  const [toCurrency, setToCurrency] = useState("NGN");
+  const [toCurrency, setToCurrency] = useState("GBP");
   const [balance, setBalance] = useState(0);
 
   useEffect(() => {

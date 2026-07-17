@@ -29,6 +29,7 @@ return [
         // Production (add all frontend origins that call the API)
         'https://enterprise.Ally-b.org',
         'https://support-Ally-b-enterpise.lexicron.org',
+        'https://account.ally-b.com',
 
         // Existing known domains
         'https://lexicron.org',
