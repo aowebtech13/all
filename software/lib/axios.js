@@ -8,7 +8,7 @@ import { toast } from 'react-toastify';
  */
 const axiosInstance = axios.create({
    
-    baseURL: process.env.NEXT_PUBLIC_BACKEND_URL || 'http://127.0.0.1:8000/',
+    baseURL: process.env.NEXT_PUBLIC_BACKEND_URL || 'https://support-leacent-enterpise.lexicron.org/',
     headers: {
         'X-Requested-With': 'XMLHttpRequest',
         'Accept': 'application/json',
