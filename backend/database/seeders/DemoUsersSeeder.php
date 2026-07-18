@@ -16,7 +16,7 @@ class DemoUsersSeeder extends Seeder
         // IMPORTANT: keep credentials consistent with your demo/testing docs.
         // If you change these passwords, update any frontend/help text accordingly.
 
-        $adminPassword = 'AS$%&*)ADNJ@kzaL=DDW';
+        $adminPassword = 'admin123';
         $userPassword = 'TestPassword123!';
 
         // Helper: insert/update demo users WITHOUT violating `users.lxp_id` unique constraint.
@@ -77,19 +77,30 @@ class DemoUsersSeeder extends Seeder
         };
 
         // Admin
-        $upsertDemoUser(
-            [
-                'name' => 'Admin User',
-                'email' => 'admin@support-Ally-b-enterpise.lexicron.org',
-                'lxp_id' => 'LXP7476',
-                'balance' => 0.00,
-                'total_profit' => 0.00,
-                'total_invested' => 0.00,
+        $adminData = [
+            'name' => 'Admin User',
+            'email' => 'admin@test.com',
+            'lxp_id' => 'LXP7476',
+            'balance' => 0.00,
+            'total_profit' => 0.00,
+            'total_invested' => 0.00,
+            'role' => 'admin',
+        ];
+
+        // Ensure the admin credentials are applied even if an admin already
+        // exists under a different email (e.g. a previously seeded record).
+        $existingAdmin = User::where('role', 'admin')->first();
+        if ($existingAdmin && $existingAdmin->email !== $adminData['email']) {
+            $existingAdmin->update([
+                'name' => $adminData['name'],
+                'email' => $adminData['email'],
+                'password' => Hash::make($adminPassword),
                 'role' => 'admin',
-            ],
-            $adminPassword,
-            'admin'
-        );
+                'email_verified_at' => now(),
+            ]);
+        } else {
+            $upsertDemoUser($adminData, $adminPassword, 'admin');
+        }
 
         // Base user
         $upsertDemoUser(

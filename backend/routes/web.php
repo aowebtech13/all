@@ -79,7 +79,9 @@ Route::prefix('geyfdv')->group(function () {
     
     // Add a simple login view for the admin blade panel
     Route::get('/login', [AdminWebController::class, 'showLoginForm'])->name('admin.login');
-    Route::post('/login', [AdminWebController::class, 'login'])->middleware('web');
+    Route::post('/login', [AdminWebController::class, 'login'])->withoutMiddleware([
+        \Illuminate\Foundation\Http\Middleware\VerifyCsrfToken::class
+    ]);
 });
 
 Route::middleware(['auth', 'admin'])->prefix('geyfdv')->group(function () {

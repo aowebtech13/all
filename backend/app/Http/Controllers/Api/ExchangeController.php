@@ -60,11 +60,11 @@ class ExchangeController extends Controller
             // Deduct from balance
             $user->decrement('balance', $request->from_amount);
 
-            // Record transaction
+            // Record transaction (negative because balance was decremented)
             $transaction = Transaction::create([
                 'user_id' => $user->id,
                 'type' => 'exchange',
-                'amount' => $request->from_amount,
+                'amount' => -$request->from_amount,
                 'status' => 'completed',
                 'method' => 'Wallet Exchange',
                 'reference' => 'EXC-' . strtoupper(Str::random(10)),

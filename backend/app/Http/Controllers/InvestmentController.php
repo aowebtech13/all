@@ -109,9 +109,7 @@ class InvestmentController extends Controller
         // falling back to the stored `balance` column when no transactions exist yet.
         $computedBalance = (float) $user->transactions()
             ->where('status', 'completed')
-            ->selectRaw("SUM(CASE WHEN type = 'deposit' THEN amount ELSE 0 END) -
-                         SUM(CASE WHEN type IN ('withdrawal', 'investment', 'payment', 'send') THEN ABS(amount) ELSE 0 END) as balance")
-            ->value('balance');
+            ->sum('amount');
 
         $balance = $computedBalance !== 0.0
             ? $computedBalance

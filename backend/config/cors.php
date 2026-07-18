@@ -2,48 +2,38 @@
 
 return [
 
-    /*
-    |--------------------------------------------------------------------------
-    | Cross-Origin Resource Sharing (CORS) Configuration
-    |--------------------------------------------------------------------------
-    |
-    | Here you may configure your settings for cross-origin resource sharing
-    | or "CORS". This determines what cross-origin operations may execute
-    | in web browsers. You are free to adjust these settings as needed.
-    |
-    | To learn more: https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS
-    |
-    */
-
-'paths' => ['api/*', '*'],
+    'paths' => ['#^api/.*$#', '#^.*$#'],
 
     'allowed_methods' => ['*'],
 
-
-'allowed_origins' => [
+    'allowed_origins' => [
         env('FRONTEND_URL', 'http://localhost:3000'),
         // Local dev
         'http://localhost:3000',
         'http://127.0.0.1:3000',
+        'http://127.0.0.1:8000',
 
-        // Production (add all frontend origins that call the API)
-        'https://enterprise.Ally-b.org',
+        // Production
         'https://livinus-backend-api.lexicron.org',
-        'https://account.ally-b.com',
-
-        // Existing known domains
-        'https://lexicron.org',
-        'https://www.lexicron.org',
-        'https://www.partners.Ally-b.com',
+        'https://lexicron.org',    
         'http://lexicron.org',
         'http://www.lexicron.org',
     ],
 
     'allowed_origins_patterns' => [
-        '*.lexicron.org',
+        // Match HTTP or HTTPS for any subdomain under lexicron.org safely
+        '#^https?://.*\.lexicron\.org$#',
     ],
 
-    'allowed_headers' => ['*'],
+    'allowed_headers' => [
+        'Authorization',
+        'Content-Type',
+        'X-Requested-With',
+        'X-XSRF-TOKEN',
+        'X-CSRF-TOKEN',
+        'Accept',
+        'Origin',
+    ],
 
     'exposed_headers' => [],
 

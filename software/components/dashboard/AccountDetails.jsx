@@ -35,7 +35,7 @@ const AccountDetails = ({ dashboardData, loading }) => {
           <h5>Hi, {user?.name || 'Guest'}!</h5>
           <h2>{formatCurrency(dashboardData?.stats?.balance)}</h2>
           <h5 className="receive">
-            Balance <span>{formatCurrency(dashboardData?.stats?.balance)}</span>
+            My Balance <span>{formatCurrency(dashboardData?.stats?.balance)}</span>
           </h5>
         </div>
         <div className="right-side">
