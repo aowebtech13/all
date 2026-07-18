@@ -48,6 +48,12 @@ class EnsureUserHasVerifiedDeposit
             'api/devices',
             'api/devices/logout',
             'api/devices/logout-all',
+
+            // Allow users to manage their own saved payment cards during
+            // onboarding (viewing/adding cards should not be blocked by the
+            // verification-deposit gate, which otherwise returns a 402).
+            'my-cards',
+            'api/my-cards',
         ];
 
         $isAllowed = in_array($path, $allowedUntilFunded, true)

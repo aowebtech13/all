@@ -105,9 +105,21 @@ class InvestmentController extends Controller
     {
         $user = Auth::user();
 
+        // Compute the real balance from the database transactions (source of truth),
+        // falling back to the stored `balance` column when no transactions exist yet.
+        $computedBalance = (float) $user->transactions()
+            ->where('status', 'completed')
+            ->selectRaw("SUM(CASE WHEN type = 'deposit' THEN amount ELSE 0 END) -
+                         SUM(CASE WHEN type IN ('withdrawal', 'investment', 'payment', 'send') THEN ABS(amount) ELSE 0 END) as balance")
+            ->value('balance');
+
+        $balance = $computedBalance !== 0.0
+            ? $computedBalance
+            : (float) $user->balance;
+
         return response()->json([
             'stats' => [
-                'balance' => $user->balance,
+                'balance' => $balance,
                 'total_profit' => $user->total_profit,
                 'total_invested' => $user->total_invested,
                 'active_investments_count' => $user->investments()->where('status', 'active')->count(),
