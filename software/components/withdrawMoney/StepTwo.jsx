@@ -2,11 +2,34 @@
 import { PaylioContext } from "@/context/context";
 import Image from "next/image";
 import Link from "next/link";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import support_icon from "/public/images/icon/support-icon.png";
 
+const bankNames = {
+  credem: "Credito Emiliano (Credem)",
+  "banca-popolare-sondrio": "Banca Popolare di Sondrio",
+  "banca-sella": "Banca Sella",
+  "banco-desio-brianza": "Banco di Desio e della Brianza",
+  illimity: "Illimity Bank",
+};
+
 const StepTwo = () => {
-  const { activeLefMenu } = useContext(PaylioContext);
+  const { activeLefMenu, withdrawData, setWithdrawData } = useContext(PaylioContext);
+  const [amount, setAmount] = useState(withdrawData.amount || "");
+  const [currency, setCurrency] = useState(withdrawData.currency || "EUR");
+
+  const selectedBank = bankNames[withdrawData.bank] || "No bank selected";
+
+  const onAmountChange = (e) => {
+    setAmount(e.target.value);
+    setWithdrawData((prev) => ({ ...prev, amount: e.target.value }));
+  };
+
+  const onCurrencyChange = (e) => {
+    setCurrency(e.target.value);
+    setWithdrawData((prev) => ({ ...prev, currency: e.target.value }));
+  };
+
   return (
     <section
       className={`dashboard-section ${
@@ -32,17 +55,19 @@ const StepTwo = () => {
                 <div className="table-area">
                   <form action="#">
                     <div className="send-banance">
-                      <span className="mdr">How much you want to add?</span>
+                      <span className="mdr">Withdraw to: {selectedBank}</span>
                       <div className="input-area">
                         <input
                           className="xxlr"
                           placeholder="400.00"
                           type="number"
+                          value={amount}
+                          onChange={onAmountChange}
                         />
-                        <select>
-                          <option value="1">USD</option>
-                          <option value="2">GBP</option>
-                          <option value="3">INR</option>
+                        <select value={currency} onChange={onCurrencyChange}>
+                          <option value="EUR">EUR</option>
+                          <option value="USD">USD</option>
+                          <option value="GBP">GBP</option>
                         </select>
                       </div>
                       <p>

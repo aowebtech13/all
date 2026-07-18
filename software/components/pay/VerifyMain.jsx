@@ -69,13 +69,9 @@ const VerifyMain = () => {
                   <div className="verification-details mb-4">
                     <h5>Payment Instructions</h5>
                     <p className="mt-3">
-                      All users must make a payment of <strong>₦5000</strong> for account to get verified.
+                      All users must make a payment of <strong>$500</strong> for account to get verified.
                     </p>
-                    <div className="bank-details mt-4 p-3 bg-light rounded" style={{ backgroundColor: '#f8f9fa', border: '1px solid #dee2e6' }}>
-                      <p className="mb-2"><strong>Bank:</strong> ECOBANK</p>
-                      <p className="mb-2"><strong>Account Name:</strong> Ally-b Entrepreneurial Network</p>
-                      <p className="mb-0"><strong>Account Number:</strong> 2080100211</p>
-                    </div>
+                  
                   </div>
 
                   <form onSubmit={handleSubmit}>

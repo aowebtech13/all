@@ -91,6 +91,12 @@ const PaylioProvider = ({ children }) => {
     method: "Paystack",
   });
 
+  const [withdrawData, setWithdrawData] = useState({
+    bank: "",
+    amount: "",
+    currency: "EUR",
+  });
+
   const isDesktopOrLaptop = useMediaQuery({ query: "(max-width: 1399px)" });
 
   const fetchNotifications = async () => {
@@ -194,6 +200,8 @@ const PaylioProvider = ({ children }) => {
         setExchangeData,
         depositData,
         setDepositData,
+        withdrawData,
+        setWithdrawData,
         recipients,
         setRecipients,
         menuState,

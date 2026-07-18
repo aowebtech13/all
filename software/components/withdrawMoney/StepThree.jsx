@@ -5,8 +5,19 @@ import Link from "next/link";
 import { useContext } from "react";
 import support_icon from "/public/images/icon/support-icon.png";
 
+const bankNames = {
+  credem: "Credito Emiliano (Credem)",
+  "banca-popolare-sondrio": "Banca Popolare di Sondrio",
+  "banca-sella": "Banca Sella",
+  "banco-desio-brianza": "Banco di Desio e della Brianza",
+  illimity: "Illimity Bank",
+};
+
 const StepThree = () => {
-  const { activeLefMenu } = useContext(PaylioContext);
+  const { activeLefMenu, withdrawData } = useContext(PaylioContext);
+  const selectedBank = bankNames[withdrawData.bank] || "No bank selected";
+  const amount = withdrawData.amount || "0.00";
+  const currency = withdrawData.currency || "EUR";
   return (
     <section
       className={`dashboard-section ${
@@ -43,20 +54,20 @@ const StepThree = () => {
                       <div className="col-xxl-8 col-xl-10 col-12">
                         <ul className="details-list">
                           <li>
-                            <span>Payment System</span>
-                            <b>Ally-b</b>
+                            <span>Bank</span>
+                            <b>{selectedBank}</b>
                           </li>
                           <li>
-                            <span>Ally-b Payment Card</span>
+                            <span>Account</span>
                             <b>**** **** **** 1182</b>
                           </li>
                           <li>
                             <span>You will receive</span>
-                            <b>400.00 USD</b>
+                            <b>{amount} {currency}</b>
                           </li>
                           <li>
                             <span>Fee</span>
-                            <b>1 USD</b>
+                            <b>1 {currency}</b>
                           </li>
                           <li>
                             <span>E-mail</span>

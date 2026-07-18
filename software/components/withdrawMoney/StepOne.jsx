@@ -5,17 +5,23 @@ import Image from "next/image";
 import Link from "next/link";
 import { useContext, useState } from "react";
 import add_new from "/public/images/add-new.png";
-import blockchain_card from "/public/images/blockchain-card.png";
+import bank_icon from "/public/images/icon/bank-account-icon.png";
 import support_icon from "/public/images/icon/support-icon.png";
-import paylio_card from "/public/images/paylio-card.png";
-import paypal_card from "/public/images/paypal-card.png";
-import visa_card from "/public/images/visa-card.png";
+
+const banks = [
+  { id: "credem", name: "Credito Emiliano (Credem)" },
+  { id: "banca-popolare-sondrio", name: "Banca Popolare di Sondrio" },
+  { id: "banca-sella", name: "Banca Sella" },
+  { id: "banco-desio-brianza", name: "Banco di Desio e della Brianza" },
+  { id: "illimity", name: "Illimity Bank" },
+];
 
 const StepOne = () => {
-  const [cardActive, setCardActive] = useState("visa");
-  const { activeLefMenu } = useContext(PaylioContext);
+  const { activeLefMenu, withdrawData, setWithdrawData } = useContext(PaylioContext);
+  const [cardActive, setCardActive] = useState(withdrawData.bank || banks[0].id);
   const onchangeHandler = (e) => {
     setCardActive(e.target.name);
+    setWithdrawData((prev) => ({ ...prev, bank: e.target.name }));
   };
 
   return (
@@ -65,34 +71,25 @@ const StepOne = () => {
                     <h6>Linked Payment system</h6>
                   </div>
                   <div className="card-area d-flex flex-wrap">
-                    <div className="single-card">
-                      <input
-                        type="radio"
-                        name="visa"
-                        id="visa"
-                        checked={cardActive === "visa" && true}
-                        onChange={onchangeHandler}
-                      />
-                      <label htmlFor="visa">
-                        <span className="wrapper"></span>
-                        <Image src={visa_card} alt="image" />
-                      </label>
-                    </div>
-                    <div className="single-card">
-                      <input
-                        type="radio"
-                        name="paypal"
-                        id="paypal"
-                        checked={cardActive === "paypal" && true}
-                        onChange={onchangeHandler}
-                      />
-                      <label htmlFor="paypal">
-                        <span className="wrapper"></span>
-                        <Image src={paypal_card} alt="image" />
-                      </label>
-                    </div>
-                    
-               
+                    {banks.map((bank) => (
+                      <div className="single-card" key={bank.id}>
+                        <input
+                          type="radio"
+                          name={bank.id}
+                          id={bank.id}
+                          checked={cardActive === bank.id && true}
+                          onChange={onchangeHandler}
+                        />
+                        <label htmlFor={bank.id}>
+                          <span className="wrapper"></span>
+                          <span className="bank-option d-flex align-items-center gap-2">
+                            <Image src={bank_icon} alt="bank" width={32} height={32} />
+                            <span className="bank-name">{bank.name}</span>
+                          </span>
+                        </label>
+                      </div>
+                    ))}
+
                     <div className="single-card">
                       <button
                         type="button"
