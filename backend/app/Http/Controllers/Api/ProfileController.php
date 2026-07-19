@@ -95,33 +95,4 @@ class ProfileController extends Controller
         ]);
     }
 
-    public function getNotifications()
-    {
-        $user = Auth::user();
-        if (!$user) {
-            return response()->json(['message' => 'Unauthenticated'], 401);
-        }
-        
-        $notifications = $user->notifications()->latest()->limit(10)->get();
-        $unreadCount = $user->unreadNotifications()->count();
-
-        return response()->json([
-            'notifications' => $notifications,
-            'unread_count' => $unreadCount
-        ]);
-    }
-
-    public function markNotificationsAsRead()
-    {
-        $user = Auth::user();
-        if (!$user) {
-            return response()->json(['message' => 'Unauthenticated'], 401);
-        }
-
-        $user->unreadNotifications->markAsRead();
-
-        return response()->json([
-            'message' => 'Notifications marked as read'
-        ]);
-    }
 }

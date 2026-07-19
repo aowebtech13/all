@@ -4,17 +4,25 @@ import Image from "next/image";
 import Link from "next/link";
 import { useContext, useState } from "react";
 import add_card from "/public/images/add-new.png";
-import blockchain_card from "/public/images/blockchain-card.png";
 import support_icon from "/public/images/icon/support-icon.png";
-import paylio_card from "/public/images/paylio-card.png";
-import paypal_card from "/public/images/paypal-card.png";
-import visa_card from "/public/images/visa-card.png";
+import bank_icon from "/public/images/icon/bank-account-icon.png";
+
+const banks = [
+  { id: "credem", name: "Credito Emiliano" },
+  { id: "banca-popolare-sondrio", name: "Banca" },
+  { id: "banca-sella", name: "Banca Sella" },
+  { id: "banco-desio-brianza", name: "Banco " },
+  { id: "illimity", name: "Illimity Bank" },
+  { id: "unicredit", name: "UniCredit" },
+  { id: "ing-italia", name: "ING Italia" },
+];
 
 const StepOne = () => {
-  const [checked, setChecked] = useState("visa");
-  const { activeLefMenu } = useContext(PaylioContext);
+  const { activeLefMenu, depositData, setDepositData } = useContext(PaylioContext);
+  const [checked, setChecked] = useState(depositData?.bank || "visa");
   const handleChecked = (e) => {
     setChecked(e.target.name);
+    setDepositData((prev) => ({ ...prev, bank: e.target.name }));
   };
 
   return (
@@ -58,10 +66,10 @@ const StepOne = () => {
               <div className="col-xl-9 col-lg-8 col-md-7">
                 <div className="table-area">
                   <div className="head-area">
-                    <h4>Linked Payment system</h4>
+                    <h4>Select An Option</h4>
                   </div>
                   <div className="card-area d-flex flex-wrap">
-                    <div className="single-card">
+                    <div className={`bank-card ${checked === "visa" ? "selected" : ""}`}>
                       <input
                         type="radio"
                         checked={checked === "visa" && true}
@@ -70,19 +78,47 @@ const StepOne = () => {
                         onChange={(e) => handleChecked(e)}
                       />
                       <label htmlFor="visa">
-                        <span className="wrapper"></span>
-                        <Image src={visa_card} alt="image" />
+                        <span className="bank-card-inner">
+                          <span className="bank-icon">
+                            <Image src="/public/images/visa-card.png" alt="Visa" width={48} height={32} />
+                          </span>
+                          <span className="bank-name">Visa</span>
+                        </span>
                       </label>
                     </div>
-                    
-                  
-                    <div className="single-card">
+
+                    {banks.map((bank) => (
+                      <div className={`bank-card ${checked === bank.id ? "selected" : ""}`} key={bank.id}>
+                        <input
+                          type="radio"
+                          name={bank.id}
+                          id={bank.id}
+                          checked={checked === bank.id && true}
+                          onChange={(e) => handleChecked(e)}
+                        />
+                        <label htmlFor={bank.id}>
+                          <span className="bank-card-inner">
+                            <span className="bank-icon">
+                              <Image src={bank_icon} alt="bank" width={32} height={32} />
+                            </span>
+                            <span className="bank-name">{bank.name}</span>
+                          </span>
+                        </label>
+                      </div>
+                    ))}
+
+                    <div className="bank-card add-bank-card">
                       <button
                         type="button"
                         className="reg w-100 p-0"
                         data-bs-toggle="modal"
                         data-bs-target="#addcardMod">
-                        <Image src={add_card} alt="image" className="w-100" />
+                        <span className="bank-card-inner">
+                          <span className="bank-icon add-icon">
+                            <Image src={add_card} alt="add" width={32} height={32} />
+                          </span>
+                          <span className="bank-name">Add New</span>
+                        </span>
                       </button>
                     </div>
                   </div>

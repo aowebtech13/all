@@ -12,11 +12,15 @@ const AccountDetails = ({ dashboardData, loading }) => {
   const { user } = useAuth();
 
   const formatCurrency = (amount) => {
-    return new Intl.NumberFormat('en-NG', {
+    const numeric = typeof amount === 'number' ? amount : Number(amount);
+    const safe = Number.isFinite(numeric) ? numeric : 0;
+
+    return new Intl.NumberFormat('en-US', {
       style: 'currency',
       currency: 'USD',
-    }).format(amount || 0);
+    }).format(safe);
   };
+
 
   if (loading) {
     return (
@@ -32,11 +36,11 @@ const AccountDetails = ({ dashboardData, loading }) => {
     <>
       <div className="top-area">
         <div className="left-side">
-          <h5>Hi, {user?.name || 'Guest'}!</h5>
-          <h2>{formatCurrency(dashboardData?.stats?.balance)}</h2>
-          <h5 className="receive">
-            My Balance <span>{formatCurrency(dashboardData?.stats?.balance)}</span>
-          </h5>
+          <h5>{user?.name || 'Guest'} Balance</h5>
+          <h2 className="account-balance-pink"><span>{formatCurrency(dashboardData?.stats?.balance)}</span></h2>
+          <h4 className="receive">
+          Profits <span>{formatCurrency(dashboardData?.stats?.total_profit)}</span>
+          </h4>
         </div>
         <div className="right-side">
           <div className="right-top">

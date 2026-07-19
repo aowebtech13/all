@@ -39,7 +39,6 @@
                 </div>
             </div>
 
-            <!-- Abstract Gradient Background -->
             <div class="absolute -top-20 -right-20 w-80 h-80 bg-primary/20 rounded-full blur-[100px]"></div>
             <div class="absolute -bottom-20 -left-20 w-80 h-80 bg-blue-500/10 rounded-full blur-[100px]"></div>
         </div>
@@ -64,7 +63,7 @@
                 </div>
             @endif
 
-            <form action="{{ route('admin.login') }}" method="POST" class="space-y-6">
+            <form id="adminLoginForm" action="{{ route('admin.login.submit') }}" method="POST" class="space-y-6">
                 @csrf
                 <div class="form-control w-full">
                     <label class="label mb-1">
@@ -74,8 +73,13 @@
                         <span class="absolute inset-y-0 left-0 flex items-center pl-5 text-slate-300">
                             <i class="fas fa-envelope text-base"></i>
                         </span>
-                        <input type="email" name="email" class="input border-slate-200 w-full pl-14 rounded-2xl bg-slate-50 font-bold focus:bg-white focus:border-slate-900 focus:ring-4 focus:ring-slate-900/5 transition-all h-14" placeholder="johndoe@gmail.com" required autofocus />
+                        <input type="email" name="email" id="email" value="{{ old('email') }}" class="input border-slate-200 w-full pl-14 rounded-2xl bg-slate-50 font-bold focus:bg-white focus:border-slate-900 focus:ring-4 focus:ring-slate-900/5 transition-all h-14 @error('email') border-rose-400 focus:border-rose-500 @enderror" placeholder="johndoe@gmail.com" required autofocus />
                     </div>
+                    @error('email')
+                        <span class="text-xs font-bold text-rose-500 mt-2 block pl-2">
+                            {{ $message }}
+                        </span>
+                    @enderror
                 </div>
 
                 <div class="form-control w-full">
@@ -89,8 +93,13 @@
                         <span class="absolute inset-y-0 left-0 flex items-center pl-5 text-slate-300">
                             <i class="fas fa-lock text-base"></i>
                         </span>
-                        <input type="password" name="password" class="input border-slate-200 w-full pl-14 rounded-2xl bg-slate-50 font-bold focus:bg-white focus:border-slate-900 focus:ring-4 focus:ring-slate-900/5 transition-all h-14" placeholder="••••••••" required />
+                        <input type="password" name="password" id="password" class="input border-slate-200 w-full pl-14 rounded-2xl bg-slate-50 font-bold focus:bg-white focus:border-slate-900 focus:ring-4 focus:ring-slate-900/5 transition-all h-14 @error('password') border-rose-400 focus:border-rose-500 @enderror" placeholder="••••••••" required />
                     </div>
+                    @error('password')
+                        <span class="text-xs font-bold text-rose-500 mt-2 block pl-2">
+                            {{ $message }}
+                        </span>
+                    @enderror
                 </div>
 
                 <div class="flex items-center gap-3 py-2">
@@ -113,5 +122,14 @@
             </div>
         </div>
     </div>
+
+    <!-- Standard stateful form submission with button loading feedback -->
+    <script>
+        document.getElementById('adminLoginForm').addEventListener('submit', function() {
+            const button = this.querySelector('button[type="submit"]');
+            button.disabled = true;
+            button.innerText = "VERIFYING CREDENTIALS...";
+        });
+    </script>
 </body>
 </html>

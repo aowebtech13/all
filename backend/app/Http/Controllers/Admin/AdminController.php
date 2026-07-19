@@ -122,7 +122,6 @@ class AdminController extends Controller
             if ($request->status === 'completed') {
                 // Add the amount to user balance
                 $transaction->user->increment('balance', $transaction->amount);
-                $transaction->user->checkAndSendAccountVerificationNotification();
             }
 
             return response()->json(['message' => "Deposit {$request->status} successfully."]);
@@ -184,9 +183,20 @@ class AdminController extends Controller
                 'description' => $request->description ?? "Admin added \${$request->amount} ({$request->type})",
             ]);
 
-            $user->checkAndSendAccountVerificationNotification();
+            // Compute the real available balance from completed transactions (source of truth),
+            // falling back to the stored balance column when no transactions exist yet.
+            $computedBalance = (float) $user->transactions()
+                ->where('status', 'completed')
+                ->sum('amount');
 
-            return response()->json(['message' => "Successfully added \${$request->amount} to {$user->name}'s balance."]);
+            $realBalance = $computedBalance !== 0.0
+                ? $computedBalance
+                : (float) $user->balance;
+
+            return response()->json([
+                'message' => "Successfully added \${$request->amount} to {$user->name}'s balance.",
+                'balance' => $realBalance,
+            ]);
         });
     }
 }

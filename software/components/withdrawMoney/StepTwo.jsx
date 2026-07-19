@@ -2,7 +2,7 @@
 import { PaylioContext } from "@/context/context";
 import Image from "next/image";
 import Link from "next/link";
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import support_icon from "/public/images/icon/support-icon.png";
 
 const bankNames = {
@@ -11,24 +11,17 @@ const bankNames = {
   "banca-sella": "Banca Sella",
   "banco-desio-brianza": "Banco di Desio e della Brianza",
   illimity: "Illimity Bank",
+  unicredit: "UniCredit",
+  "ing-italia": "ING Italia",
 };
 
 const StepTwo = () => {
-  const { activeLefMenu, withdrawData, setWithdrawData } = useContext(PaylioContext);
-  const [amount, setAmount] = useState(withdrawData.amount || "");
-  const [currency, setCurrency] = useState(withdrawData.currency || "EUR");
+  const { activeLefMenu, withdrawData } = useContext(PaylioContext);
 
   const selectedBank = bankNames[withdrawData.bank] || "No bank selected";
-
-  const onAmountChange = (e) => {
-    setAmount(e.target.value);
-    setWithdrawData((prev) => ({ ...prev, amount: e.target.value }));
-  };
-
-  const onCurrencyChange = (e) => {
-    setCurrency(e.target.value);
-    setWithdrawData((prev) => ({ ...prev, currency: e.target.value }));
-  };
+  const amount = withdrawData.amount || "0.00";
+  const currency = withdrawData.currency || "USD";
+  const account = withdrawData.account || "—";
 
   return (
     <section
@@ -47,32 +40,30 @@ const StepTwo = () => {
             <div className="choose-recipient">
               <div className="step-area">
                 <span className="mdr">Step 2 of 3</span>
-                <h5>Set Amount of transfer</h5>
+                <h5>Review Withdrawal</h5>
               </div>
             </div>
             <div className="row pb-120">
               <div className="col-md-7">
                 <div className="table-area">
                   <form action="#">
-                    <div className="send-banance">
-                      <span className="mdr">Withdraw to: {selectedBank}</span>
-                      <div className="input-area">
-                        <input
-                          className="xxlr"
-                          placeholder="400.00"
-                          type="number"
-                          value={amount}
-                          onChange={onAmountChange}
-                        />
-                        <select value={currency} onChange={onCurrencyChange}>
-                          <option value="EUR">EUR</option>
-                          <option value="USD">USD</option>
-                          <option value="GBP">GBP</option>
-                        </select>
-                      </div>
-                      <p>
-                        Available Balance<b>$30,700.00</b>
-                      </p>
+                    <div className="payment-details">
+                      <ul className="details-list">
+                        <li>
+                          <span>Bank---- </span>
+                          <b>{selectedBank}</b>
+                        </li>
+                        <li>
+                          <span>Account--- </span>
+                          <b>{account}</b>
+                        </li>
+                        <li>
+                          <span>Amount---- </span>
+                          <b>
+                            {amount} {currency}
+                          </b>
+                        </li>
+                      </ul>
                     </div>
                   </form>
                 </div>

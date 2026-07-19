@@ -29,7 +29,7 @@ const LinkedPaymentSystem = () => {
   const transferLimit = Number(defaultCard?.transfer_limit || 0);
 
   useEffect(() => {
-    // Backend blocks /api/my-cards with HTTP 402 until user confirms ₦5,000 deposit.
+    // Backend blocks /api/my-cards with HTTP 402 until user confirms  deposit.
     // Skip the request entirely until the user is eligible.
     if (!user?.email_verified_at) {
       setCards([]);
@@ -83,7 +83,7 @@ const LinkedPaymentSystem = () => {
   return (
     <>
       <div className="section-text d-flex align-items-center justify-content-between">
-        <h6>Linked Payment system</h6>
+        <h6>Select An Option</h6>
         <div className="right-side">
           <div className="dropdown-area">
             <button

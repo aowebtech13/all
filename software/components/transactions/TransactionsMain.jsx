@@ -13,16 +13,20 @@ import search from "/public/images/icon/search.png";
 import axios from "@/lib/axios";
 
 const TransactionsMain = () => {
-  const { activeLefMenu } = useContext(PaylioContext);
+  const { activeLefMenu, setSelectedTransaction } = useContext(PaylioContext);
   const [transactions, setTransactions] = useState([]);
   const [loading, setLoading] = useState(true);
   const [paginationData, setPaginationData] = useState(null);
   const [page, setPage] = useState(1);
+  const [selectedType, setSelectedType] = useState("all");
 
-  const fetchTransactions = async (pageNum = 1) => {
+  const fetchTransactions = async (pageNum = 1, type = "all") => {
     setLoading(true);
     try {
-      const response = await axios.get(`/api/transactions?page=${pageNum}`);
+      const url = type === "all"
+        ? `/api/transactions?page=${pageNum}`
+        : `/api/transactions?page=${pageNum}&type=${type}`;
+      const response = await axios.get(url);
       setTransactions(response.data.data || []);
       setPaginationData(response.data);
     } catch (error) {
@@ -32,14 +36,19 @@ const TransactionsMain = () => {
     }
   };
 
+  const handleTypeChange = (type) => {
+    setSelectedType(type);
+    setPage(1);
+  };
+
   useEffect(() => {
-    fetchTransactions(page);
-  }, [page]);
+    fetchTransactions(page, selectedType);
+  }, [page, selectedType]);
 
   const formatCurrency = (amount) => {
-    return new Intl.NumberFormat('en-NG', {
+    return new Intl.NumberFormat('en-US', {
       style: 'currency',
-      currency: 'NGN',
+      currency: 'USD',
     }).format(amount || 0);
   };
 
@@ -59,6 +68,15 @@ const TransactionsMain = () => {
       case 'failed':
       case 'cancelled': return 'cancelled';
       default: return '';
+    }
+  };
+
+  const handleRowClick = (transaction) => {
+    setSelectedTransaction(transaction);
+    const modalEl = document.getElementById('transactionsMod');
+    if (modalEl && window.bootstrap) {
+      const modal = new window.bootstrap.Modal(modalEl);
+      modal.show();
     }
   };
 
@@ -122,7 +140,7 @@ const TransactionsMain = () => {
                   </div>
                 </div>
                 {/* Filter */}
-                <Filter />
+                <Filter selectedType={selectedType} onTypeChange={handleTypeChange} />
                 <div className="table-responsive">
                   <table className="table">
                     <thead>
@@ -150,7 +168,7 @@ const TransactionsMain = () => {
                         transactions.map((transaction) => {
                           const formattedDate = formatDate(transaction.created_at);
                           return (
-                            <tr key={transaction.id} data-bs-toggle="modal" data-bs-target="#transactionsMod">
+                            <tr key={transaction.id} onClick={() => handleRowClick(transaction)} style={{ cursor: 'pointer' }}>
                               <th scope="row">
                                 <p>{transaction.type.charAt(0).toUpperCase() + transaction.type.slice(1)}</p>
                                 <p className="mdr">{transaction.description || (transaction.method ? `Via ${transaction.method}` : '')}</p>
@@ -184,7 +202,7 @@ const TransactionsMain = () => {
                       </li>
                       {[...Array(paginationData.last_page)].map((_, i) => (
                         <li key={i} className={`page-item ${page === i + 1 ? 'active' : ''}`}>
-                          <button className="page-link" onClick={() => setPage(i + 1)}>{i + 1}</button>
+                          <button className="page-link" onClick={() => setPage(page + 1)}>{i + 1}</button>
                         </li>
                       ))}
                       <li className={`page-item ${page === paginationData.last_page ? 'disabled' : ''}`}>

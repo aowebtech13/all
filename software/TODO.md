@@ -1,9 +1,18 @@
 # TODO
 
-## Task: Fix Laravel admin login error (fruitcake/php-cors preg_match delimiter)
+## Fix: deposit receipt required but no upload in deposit-money step-3
+- [x] Inspect backend validation requirements for `/api/deposit` (receipt required)
 
-- [ ] Confirm root cause by reviewing CORS configuration and middleware usage.
-- [ ] Update `backend/config/cors.php` to remove invalid wildcard/`*` usage that breaks fruitcake/php-cors.
-- [ ] Run a quick sanity check by invoking PHP autoload and/or starting Laravel to ensure no CORS exceptions on login route.
-- [ ] Re-test admin login route `/geyfdv/login` (or the actual failing URL you mentioned) and verify the error is gone.
+- [x] Update `software/components/depositMoney/StepThree.jsx` to include receipt upload UI + FormData submission
+- [x] Reuse existing upload component if available (or create a minimal one)
+
+- [x] Ensure request matches backend fields: `amount`, `method`, `description`, `receipt`
+- [x] Basic client-side validation (file required, type image, max 2MB)
+
+
+- [x] Test flow: submit deposit without receipt -> expect validation error; submit with receipt -> success
+
+
+
+
 

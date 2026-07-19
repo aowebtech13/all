@@ -39,16 +39,16 @@ Route::middleware(['throttle:api'])->group(function () {
         })->middleware('ensure.email.verified');
 
         Route::get('/dashboard-data', [InvestmentController::class, 'getDashboardData'])
-            ->middleware(['ensure.email.verified', 'ensure.verification.deposit']);
+            ->middleware('ensure.email.verified');
 
         Route::get('/available-groups', [InvestmentController::class, 'getAvailableGroups'])
-            ->middleware(['ensure.email.verified', 'ensure.verification.deposit']);
+            ->middleware('ensure.email.verified');
 
         Route::get('/transactions', [InvestmentController::class, 'getTransactions'])
-            ->middleware(['ensure.email.verified', 'ensure.verification.deposit']);
+            ->middleware('ensure.email.verified');
 
         Route::get('/investments', [InvestmentController::class, 'getInvestments'])
-            ->middleware(['ensure.email.verified', 'ensure.verification.deposit']);
+            ->middleware('ensure.email.verified');
 
         Route::post('/investments/{id}/cancel', [InvestmentController::class, 'cancelInvestment'])
             ->middleware(['throttle:transactions', 'ensure.email.verified']);
@@ -56,15 +56,23 @@ Route::middleware(['throttle:api'])->group(function () {
         Route::post('/invest', [InvestmentController::class, 'invest'])
             ->middleware(['throttle:transactions', 'ensure.email.verified']);
 
-        Route::get('/withdrawals', [WithdrawalController::class, 'index'])
-            ->middleware('ensure.verification.deposit');
+        Route::get('/withdrawals', [WithdrawalController::class, 'index']);
 
         Route::post('/withdraw', [WithdrawalController::class, 'store'])
-            ->middleware(['throttle:transactions', 'ensure.verification.deposit']);
+            ->middleware('throttle:transactions')
+            ->name('withdraw');
+
+        // Backward-compat: some frontend pages may still post to `/withdraw-money/step-3`
+        Route::post('/withdraw-money/step-3', [WithdrawalController::class, 'store'])
+            ->middleware('throttle:transactions')
+            ->name('withdraw-step-3');
 
         Route::get('/deposits', [DepositController::class, 'index']);
+        Route::get('/deposit-balance', [DepositController::class, 'depositBalance']);
+
         Route::post('/deposit', [DepositController::class, 'store'])
-            ->middleware('throttle:transactions');
+            ->middleware('throttle:transactions')
+            ->name('deposit');
         Route::post('/deposit/paystack/verify', [DepositController::class, 'verifyPaystack'])
             ->middleware('throttle:transactions');
 
@@ -72,30 +80,21 @@ Route::middleware(['throttle:api'])->group(function () {
         Route::post('/loans', [ExchangeController::class, 'exchange'])
             ->middleware('throttle:transactions');
 
-        Route::get('/profile', [ProfileController::class, 'show'])
-            ->middleware('ensure.verification.deposit');
-        Route::post('/profile', [ProfileController::class, 'update'])
-            ->middleware('ensure.verification.deposit');
-        Route::post('/profile/password', [ProfileController::class, 'updatePassword'])
-            ->middleware('ensure.verification.deposit');
-        Route::post('/profile/withdrawal-details', [ProfileController::class, 'updateWithdrawalDetails'])
-            ->middleware('ensure.verification.deposit');
-
-        Route::get('/notifications', [ProfileController::class, 'getNotifications'])
-            ->middleware(['ensure.email.verified', 'ensure.verification.deposit']);
-        Route::post('/notifications/mark-as-read', [ProfileController::class, 'markNotificationsAsRead'])
-            ->middleware(['ensure.email.verified', 'ensure.verification.deposit']);
+        Route::get('/profile', [ProfileController::class, 'show']);
+        Route::post('/profile', [ProfileController::class, 'update']);
+        Route::post('/profile/password', [ProfileController::class, 'updatePassword']);
+        Route::post('/profile/withdrawal-details', [ProfileController::class, 'updateWithdrawalDetails']);
 
         Route::get('/recipients', [RecipientsController::class, 'index'])
-            ->middleware(['ensure.email.verified', 'ensure.verification.deposit']);
+            ->middleware('ensure.email.verified');
         Route::post('/recipients', [RecipientsController::class, 'store'])
-            ->middleware(['ensure.email.verified', 'ensure.verification.deposit']);
+            ->middleware('ensure.email.verified');
 
         Route::post('/payment-requests', [PaymentRequestController::class, 'store'])
-            ->middleware(['ensure.email.verified', 'ensure.verification.deposit']);
+            ->middleware('ensure.email.verified');
 
         Route::get('/my-cards', [MyCardController::class, 'index'])
-            ->middleware(['ensure.email.verified', 'ensure.verification.deposit']);
+            ->middleware('ensure.email.verified');
 
         Route::get('/devices', [DevicesController::class, 'index']);
         Route::post('/devices/logout', [DevicesController::class, 'logoutDevice']);

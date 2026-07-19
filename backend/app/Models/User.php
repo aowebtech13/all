@@ -6,43 +6,11 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Laravel\Sanctum\HasApiTokens;
-use Illuminate\Notifications\Notifiable;
-use App\Notifications\AccountVerifiedAndFunded;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasApiTokens, HasFactory, Notifiable;
-
-    public function checkAndSendAccountVerificationNotification()
-    {
-        if ($this->email_verified_at && $this->hasConfirmedVerificationDeposit()) {
-            // FIX: Query the core notification type column directly
-            $alreadySent = $this->notifications()
-                ->where('type', AccountVerifiedAndFunded::class)
-                ->exists();
-
-            if (!$alreadySent) {
-                $this->notify(new AccountVerifiedAndFunded());
-            }
-        }
-    }
-
-    public function hasConfirmedVerificationDeposit()
-    {
-        // Users submit membership proof via /api/deposit which creates a *pending* deposit.
-        // The dashboard gating should allow them once the expected verification deposit exists.
-        // Admin-side completion can still be handled separately.
-        return $this->transactions()
-            ->where('type', 'deposit')
-            ->where(function ($query) {
-                $query->where('amount', 5000)
-                    ->orWhere('description', 'LIKE', '%Verification%');
-            })
-            ->whereIn('status', ['pending', 'completed'])
-            ->exists();
-    }
-
+    use HasApiTokens, HasFactory;
 
     protected static function booted()
     {
@@ -117,6 +85,11 @@ class User extends Authenticatable implements MustVerifyEmail
     public function transactions()
     {
         return $this->hasMany(Transaction::class);
+    }
+
+    public function withdrawals()
+    {
+        return $this->hasMany(Withdrawal::class);
     }
 
     public function myCards()

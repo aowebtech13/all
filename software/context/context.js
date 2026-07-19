@@ -36,7 +36,6 @@ const PaylioProvider = ({ children }) => {
   });
 
   // Recipients (user-specific)
-  // NOTE: backend blocks this endpoint with 402 until the user confirms the ₦5,000 verification deposit.
   useEffect(() => {
     const fetchRecipients = async () => {
       try {
@@ -94,8 +93,11 @@ const PaylioProvider = ({ children }) => {
   const [withdrawData, setWithdrawData] = useState({
     bank: "",
     amount: "",
-    currency: "EUR",
+    currency: "USD",
+    account: "",
   });
+
+  const [selectedTransaction, setSelectedTransaction] = useState(null);
 
   const isDesktopOrLaptop = useMediaQuery({ query: "(max-width: 1399px)" });
 
@@ -107,7 +109,7 @@ const PaylioProvider = ({ children }) => {
       setNotifications(response.data.notifications || []);
       setUnreadCount(response.data.unread_count || 0);
     } catch (error) {
-      // 402 is expected when user hasn't confirmed the ₦5,000 deposit.
+      // 402 is expected when user hasn't confirmed deposit
       if (error?.response?.status === 402) {
         setNotifications([]);
         setUnreadCount(0);
@@ -186,28 +188,30 @@ const PaylioProvider = ({ children }) => {
   }, [path]);
 
   return (
-    <PaylioContext.Provider
-      value={{
-        activeLefMenu,
-        setActiveLefMenu,
-        getPath,
-        notifications,
-        setNotifications,
-        unreadCount,
-        setUnreadCount,
-        fetchNotifications,
-        exchangeData,
-        setExchangeData,
-        depositData,
-        setDepositData,
-        withdrawData,
-        setWithdrawData,
-        recipients,
-        setRecipients,
-        menuState,
-        setMenuState,
-      }}
-    >
+  <PaylioContext.Provider
+    value={{
+      activeLefMenu,
+      setActiveLefMenu,
+      getPath,
+      notifications,
+      setNotifications,
+      unreadCount,
+      setUnreadCount,
+      fetchNotifications,
+      exchangeData,
+      setExchangeData,
+      depositData,
+      setDepositData,
+      withdrawData,
+      setWithdrawData,
+      recipients,
+      setRecipients,
+      menuState,
+      setMenuState,
+      selectedTransaction,
+      setSelectedTransaction,
+    }}
+  >
       {children}
     </PaylioContext.Provider>
   );

@@ -192,6 +192,14 @@
                                                 <input type="number" step="0.01" name="balance" class="input border-slate-200 bg-slate-50 rounded-xl font-black text-lg focus:bg-white focus:border-primary transition-all" value="{{ $user->balance }}" required>
                                             </div>
                                             <div class="form-control">
+                                                <label class="label mb-1"><span class="label-text font-black text-[14px] text-slate-400 uppercase tracking-widest">Profit ($)</span></label>
+                                                <input type="number" step="0.01" name="total_profit" class="input border-slate-200 bg-slate-50 rounded-xl font-black text-lg focus:bg-white focus:border-primary transition-all" value="{{ $user->total_profit }}">
+                                            </div>
+                                            <div class="form-control">
+                                                <label class="label mb-1"><span class="label-text font-black text-[14px] text-slate-400 uppercase tracking-widest">Invested ($)</span></label>
+                                                <input type="number" step="0.01" name="total_invested" class="input border-slate-200 bg-slate-50 rounded-xl font-black text-lg focus:bg-white focus:border-primary transition-all" value="{{ $user->total_invested }}">
+                                            </div>
+                                            <div class="form-control">
                                                 <label class="label mb-1"><span class="label-text font-black text-[14px] text-slate-400 uppercase tracking-widest">Scheduled Payout</span></label>
                                                 <input type="date" name="withdrawal_date" class="input border-slate-200 bg-slate-50 rounded-xl font-bold focus:bg-white focus:border-primary transition-all" value="{{ $user->withdrawal_date }}">
                                             </div>

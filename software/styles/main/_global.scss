@@ -541,6 +541,15 @@ label {
       color: var(--bs-white);
     }
   }
+  &.outline {
+    background-color: transparent;
+    border: 2px solid var(--primary-color);
+    color: var(--primary-color);
+    &:hover {
+      background: var(--primary-color);
+      color: var(--bs-white);
+    }
+  }
 }
 
 // Animation

@@ -14,7 +14,7 @@ const PaymentMethodTab = () => {
       aria-labelledby="payment-tab"
     >
       <div className="card-area">
-        <h6>Linked Payment system</h6>
+        <h6>Select An Option</h6>
         <div className="card-content d-flex flex-wrap">
           <div className="single-card">
             <button

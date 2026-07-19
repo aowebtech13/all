@@ -24,10 +24,9 @@ const VerifyMain = () => {
     setLoading(true);
     try {
       const formData = new FormData();
-      formData.append("amount", "5000");
       formData.append("method", "Bank Transfer (ECOBANK)");
       formData.append("receipt", file);
-      formData.append("description", "Account Membership Payment");
+      formData.append("description", "Account Deposit");
 
       const response = await axios.post("/api/deposit", formData, {
         headers: {
@@ -67,11 +66,11 @@ const VerifyMain = () => {
               <div className="col-xxl-6 col-xl-8 col-md-10">
                 <div className="card custom-card p-4">
                   <div className="verification-details mb-4">
-                    <h5>Payment Instructions</h5>
+                    <h5>Deposit Instructions</h5>
                     <p className="mt-3">
-                      All users must make a payment of <strong>$500</strong> for account to get verified.
+                      Submit your payment proof to fund your account.
                     </p>
-                  
+                   
                   </div>
 
                   <form onSubmit={handleSubmit}>
@@ -89,7 +88,7 @@ const VerifyMain = () => {
                       }}
                       disabled={loading}
                     >
-                      {loading ? "Submitting..." : "Submit Membership Proof"}
+                      {loading ? "Submitting..." : "Submit Deposit Proof"}
                     </button>
                   </form>
                 </div>

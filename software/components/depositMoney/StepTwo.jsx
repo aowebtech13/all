@@ -125,9 +125,7 @@ const StepTwo = () => {
                         </select>
 
                       </div>
-                      <p>
-                        Available Balance<b>{formattedBalance}</b>
-                      </p>
+                     
                       <p>
                         Selected deposit: <b>{amount || 0} {currency}</b>
                       </p>

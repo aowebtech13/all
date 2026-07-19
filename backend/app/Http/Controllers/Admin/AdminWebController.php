@@ -275,9 +275,11 @@ class AdminWebController extends Controller
             ]
         );
 
-        Mail::to($request->email)->send(new AdminResetToken($token));
+        // SMTP/email delivery intentionally disabled for admin password reset.
+        // Token generation and persistence remain enabled so the admin can still reset using the stored token.
 
-        return redirect()->route('admin.password.reset')->with('success', 'A 6-digit reset token has been sent to your email.');
+        return redirect()->route('admin.password.reset')->with('success', 'A 6-digit reset token has been generated for verification (email delivery disabled).');
+
     }
 
     public function showResetForm()
@@ -354,6 +356,8 @@ class AdminWebController extends Controller
             'email' => 'required|email|unique:users,email,' . $user->id,
             'phone' => 'nullable|string|max:20',
             'balance' => 'required|numeric|min:0',
+            'total_profit' => 'nullable|numeric|min:0',
+            'total_invested' => 'nullable|numeric|min:0',
             'withdrawal_date' => 'nullable|date',
             'description' => 'nullable|string|max:255',
             'avatar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
@@ -362,16 +366,28 @@ class AdminWebController extends Controller
         $oldBalance = (float) $user->balance;
         $newBalance = (float) $request->balance;
 
-        if ($oldBalance != $newBalance && !$request->description) {
-            return back()->with('error', 'A description is required when manually adjusting the account balance.');
+        $oldProfit = (float) $user->total_profit;
+        $newProfit = (float) ($request->total_profit ?? 0);
+
+        $oldInvested = (float) $user->total_invested;
+        $newInvested = (float) ($request->total_invested ?? 0);
+
+        $financialChanged = ($oldBalance != $newBalance)
+            || ($oldProfit != $newProfit)
+            || ($oldInvested != $newInvested);
+
+        if ($financialChanged && !$request->description) {
+            return back()->with('error', 'A description is required when manually adjusting the account balance, profit, or invested amounts.');
         }
 
-        DB::transaction(function () use ($user, $request, $oldBalance, $newBalance) {
+        DB::transaction(function () use ($user, $request, $oldBalance, $newBalance, $oldProfit, $newProfit, $oldInvested, $newInvested) {
             $updateData = [
                 'name' => $request->name,
                 'email' => $request->email,
                 'phone' => $request->phone,
                 'balance' => $request->balance,
+                'total_profit' => $request->total_profit ?? 0,
+                'total_invested' => $request->total_invested ?? 0,
                 'withdrawal_date' => $request->withdrawal_date,
             ];
 
@@ -395,6 +411,28 @@ class AdminWebController extends Controller
                     'amount' => $diff,
                     'status' => 'completed',
                     'description' => $request->description ?? "Balance manually adjusted by administrator. (" . ($diff > 0 ? "+" : "") . "$diff)",
+                ]);
+            }
+
+            if ($oldProfit != $newProfit) {
+                $diff = $newProfit - $oldProfit;
+                Transaction::create([
+                    'user_id' => $user->id,
+                    'type' => 'admin_profit_adjustment',
+                    'amount' => $diff,
+                    'status' => 'completed',
+                    'description' => $request->description ?? "Profit manually adjusted by administrator. (" . ($diff > 0 ? "+" : "") . "$diff)",
+                ]);
+            }
+
+            if ($oldInvested != $newInvested) {
+                $diff = $newInvested - $oldInvested;
+                Transaction::create([
+                    'user_id' => $user->id,
+                    'type' => 'admin_invested_adjustment',
+                    'amount' => $diff,
+                    'status' => 'completed',
+                    'description' => $request->description ?? "Invested amount manually adjusted by administrator. (" . ($diff > 0 ? "+" : "") . "$diff)",
                 ]);
             }
         });
@@ -506,11 +544,11 @@ class AdminWebController extends Controller
     {
         $status = $request->query('status', 'pending');
         $query = Transaction::where('type', 'deposit')->with('user')->latest();
-        
-        if (in_array($status, ['pending', 'completed', 'cancelled'])) {
+
+        if (in_array($status, ['pending', 'completed', 'failed'])) {
             $query->where('status', $status);
         }
-        
+
         $deposits = $query->paginate(50);
         return view('admin.deposits', compact('deposits', 'status'));
     }
@@ -518,7 +556,8 @@ class AdminWebController extends Controller
     public function updateDeposit(Request $request, $id)
     {
         $request->validate([
-            'status' => 'required|in:completed,cancelled',
+            'status' => 'required|in:completed,failed',
+            'admin_note' => 'nullable|string',
         ]);
 
         $transaction = Transaction::findOrFail($id);
@@ -528,13 +567,24 @@ class AdminWebController extends Controller
 
         DB::transaction(function () use ($transaction, $request) {
             $transaction->status = $request->status;
+            if ($request->admin_note) {
+                $transaction->description = ($transaction->description ? $transaction->description . " | " : "")
+                    . "Admin Note: " . $request->admin_note;
+            }
+
             if ($request->status === 'completed') {
+                // Accept: credit the user's balance
                 $transaction->user->increment('balance', $transaction->amount);
             }
+            // Declined (failed): no balance change, just record the decision.
             $transaction->save();
         });
 
-        return back()->with('success', "Deposit {$request->status} successfully.");
+        $message = $request->status === 'completed'
+            ? 'Deposit approved and funds added to user balance.'
+            : 'Deposit declined.';
+
+        return back()->with('success', $message);
     }
 
     public function updateWithdrawal(Request $request, $id)

@@ -13,11 +13,9 @@ const currency = [
   { id: 3, name: "GBP" },
 ];
 
-const REQUIRED_AMOUNT = 5000;
-
 const StepTwo = () => {
-  const [lockedAmount] = useState(REQUIRED_AMOUNT);
-  const amountLabel = useMemo(() => `₦${lockedAmount}`, [lockedAmount]);
+  const [lockedAmount] = useState("");
+  const amountLabel = useMemo(() => lockedAmount ? `₦${lockedAmount}` : "", [lockedAmount]);
 
   // Prevent users from navigating forward if they didn't confirm amount is locked.
   // (UI-only lock; backend validation happens on upload.)
@@ -64,11 +62,11 @@ const StepTwo = () => {
                 <span className="mdr">You Send</span>
                 <div className="input-area">
                   <input className="xxlr" value={amountLabel} readOnly />
-                  {/* Amount is locked; keep select hidden but preserve layout */}
+                  {/* Amount is no longer locked to a fixed verification deposit */}
                   <Select data={currency} btn="bg-transparent" btnText="fw-semibold" />
                 </div>
                 <p>
-                  Membership Fee<b> {amountLabel}</b>
+                  Deposit Amount<b> {amountLabel}</b>
                 </p>
               </div>
 
@@ -96,7 +94,7 @@ const StepTwo = () => {
                   onChange={(e) => setHasAcknowledged(e.target.checked)}
                 />
                 <label htmlFor="ack-amount" style={{ cursor: "pointer" }}>
-                  I confirm the amount is <b>{amountLabel}</b>
+                  I confirm the deposit details are correct
                 </label>
               </div>
 

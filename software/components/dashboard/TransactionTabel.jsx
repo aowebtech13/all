@@ -2,10 +2,13 @@
 import Image from "next/image";
 import Link from "next/link";
 import right_arrow from "/public/images/icon/right-arrow.png";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import axios from "@/lib/axios";
+import { PaylioContext } from "@/context/context";
 
-const TransactionTabel = ({ transactions = [], loading, refreshData }) => {
+const TransactionTabel = ({ transactions = [], allActivity = [], loading, refreshData }) => {
+  const { setSelectedTransaction } = useContext(PaylioContext);
+
   useEffect(() => {
     // Refresh every 5 minutes (300,000 ms)
     const intervalId = setInterval(() => {
@@ -41,6 +44,19 @@ const TransactionTabel = ({ transactions = [], loading, refreshData }) => {
       default: return '';
     }
   };
+
+  const handleRowClick = (item) => {
+    setSelectedTransaction(item);
+    const modalEl = document.getElementById('transactionsMod');
+    if (modalEl && window.bootstrap) {
+      const modal = new window.bootstrap.Modal(modalEl);
+      modal.show();
+    }
+  };
+
+  // Use allActivity when available (combined transactions + investments + withdrawals),
+  // otherwise fall back to the legacy transactions prop
+  const displayItems = allActivity.length > 0 ? allActivity : transactions;
 
   return (
     <>
@@ -107,30 +123,47 @@ const TransactionTabel = ({ transactions = [], loading, refreshData }) => {
                       </div>
                     </td>
                   </tr>
-                ) : transactions.length === 0 ? (
+                ) : displayItems.length === 0 ? (
                   <tr>
                     <td colSpan="4" className="text-center p-5">No transactions found</td>
                   </tr>
                 ) : (
-                  transactions.map((transaction) => {
-                    const formattedDate = formatDate(transaction.created_at);
+                  displayItems.map((item) => {
+                    // Support both normalized allActivity items and legacy transaction objects
+                    const isNormalized = item.type === 'investment' || item.type === 'withdrawal' || item.name;
+                    const dateValue = isNormalized ? item.date : item.created_at;
+                    const formattedDate = formatDate(dateValue);
+
+                    let displayName;
+                    if (item.type === 'investment') {
+                      displayName = 'Investment';
+                    } else if (item.type === 'withdrawal') {
+                      displayName = 'Withdrawal';
+                    } else if (item.name) {
+                      displayName = item.name.charAt(0).toUpperCase() + item.name.slice(1);
+                    } else {
+                      displayName = item.type?.charAt(0).toUpperCase() + item.type?.slice(1) || 'Transaction';
+                    }
+
+                    const displayDescription = item.description || (item.method ? `Via ${item.method}` : '');
+
                     return (
-                      <tr key={transaction.id} data-bs-toggle="modal" data-bs-target="#transactionsMod">
+                      <tr key={`${item.type}-${item.id}`} onClick={() => handleRowClick(item)} style={{ cursor: 'pointer' }}>
                         <th scope="row">
-                          <p>{transaction.type.charAt(0).toUpperCase() + transaction.type.slice(1)}</p>
-                          <p className="mdr">{transaction.description || (transaction.method ? `Via ${transaction.method}` : '')}</p>
+                          <p>{displayName}</p>
+                          <p className="mdr">{displayDescription}</p>
                         </th>
                         <td>
                           <p>{formattedDate.time}</p>
                           <p className="mdr">{formattedDate.date}</p>
                         </td>
                         <td>
-                          <p className={getStatusClass(transaction.status)}>
-                            {transaction.status.charAt(0).toUpperCase() + transaction.status.slice(1)}
+                          <p className={getStatusClass(item.status)}>
+                            {item.status?.charAt(0).toUpperCase() + item.status?.slice(1)}
                           </p>
                         </td>
                         <td>
-                          <p>{formatCurrency(transaction.amount)}</p>
+                          <p>{formatCurrency(item.amount)}</p>
                           <p className="mdr">No Fees</p>
                         </td>
                       </tr>

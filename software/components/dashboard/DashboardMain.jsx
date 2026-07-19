@@ -9,6 +9,7 @@ import AccountDetails from "./AccountDetails";
 import LinkedPaymentSystem from "./LinkedPaymentSystem";
 import Recipients from "./Recipients";
 import TransactionTabel from "./TransactionTabel";
+import DepositWithdrawSummary from "./DepositWithdrawSummary";
 import { useAuth } from "@/hooks/useAuth";
 
 
@@ -57,12 +58,22 @@ const DashboardMain = () => {
       fetchDashboardData({ signal: controller.signal });
     }, isVerifiedLanding ? 50 : 0);
 
+    // “Real-time” refresh via polling.
+    // Avoid piling up requests: reuse a single abort controller and clear interval on cleanup.
+    const intervalMs = 10000; // 10s
+    const intervalId = setInterval(() => {
+      // If component is unmounted, the controller will be aborted.
+      fetchDashboardData({ signal: controller.signal });
+    }, intervalMs);
+
     return () => {
       clearTimeout(t);
+      clearInterval(intervalId);
       controller.abort();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isVerifiedLanding, user?.email_verified_at]);
+
 
 
 
@@ -89,10 +100,18 @@ const DashboardMain = () => {
                 </div>
                 <div className="transactions-area mt-40">
                   {/* Transaction Tabel  */}
-                  <TransactionTabel 
-                    transactions={dashboardData?.recent_transactions} 
-                    loading={loading} 
+                  <TransactionTabel
+                    transactions={dashboardData?.recent_transactions}
+                    allActivity={dashboardData?.all_activity}
+                    loading={loading}
                     refreshData={fetchDashboardData}
+                  />
+                </div>
+                <div className="deposit-withdraw-area mt-40">
+                  {/* Deposit & Withdraw Summary */}
+                  <DepositWithdrawSummary
+                    dashboardData={dashboardData}
+                    loading={loading}
                   />
                 </div>
               </div>
@@ -100,7 +119,7 @@ const DashboardMain = () => {
             <div className="col-xl-4 col-lg-5">
               <div className="side-items">
                 <div className="single-item">
-                  {/* Linked Payment System */}
+                  {/* Select An Option */}
                   <LinkedPaymentSystem />
                 </div>
                 <div className="single-item">

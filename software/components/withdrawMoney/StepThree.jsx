@@ -2,7 +2,8 @@
 import { PaylioContext } from "@/context/context";
 import Image from "next/image";
 import Link from "next/link";
-import { useContext } from "react";
+import { useContext, useState } from "react";
+import axiosInstance from "@/lib/axios";
 import support_icon from "/public/images/icon/support-icon.png";
 
 const bankNames = {
@@ -11,13 +12,47 @@ const bankNames = {
   "banca-sella": "Banca Sella",
   "banco-desio-brianza": "Banco di Desio e della Brianza",
   illimity: "Illimity Bank",
+  unicredit: "UniCredit",
+  "ing-italia": "ING Italia",
 };
 
 const StepThree = () => {
   const { activeLefMenu, withdrawData } = useContext(PaylioContext);
+  const [loading, setLoading] = useState(false);
+  const [accepted, setAccepted] = useState(false);
+
   const selectedBank = bankNames[withdrawData.bank] || "No bank selected";
   const amount = withdrawData.amount || "0.00";
-  const currency = withdrawData.currency || "EUR";
+  const currency = withdrawData.currency || "USD";
+  const account = withdrawData.account || "—";
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!accepted) {
+      alert("Please accept the terms of use.");
+      return;
+    }
+    setLoading(true);
+    try {
+      const res = await axiosInstance.post("/api/withdraw", {
+        amount: Number(amount),
+        method: selectedBank,
+        details: `Account: ${account} | Currency: ${currency}`,
+      });
+
+      alert(
+        (res?.data?.message ||
+          "Withdrawal request submitted!") +
+          " It is now pending admin approval."
+      );
+    } catch (err) {
+      alert(err?.response?.data?.message || "Failed to submit withdrawal");
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <section
       className={`dashboard-section ${
@@ -35,17 +70,17 @@ const StepThree = () => {
             <div className="choose-recipient">
               <div className="step-area">
                 <span className="mdr">Step 3 of 3</span>
-                <h5>Set Amount of transfer</h5>
+                <h5>Confirm Withdrawal</h5>
               </div>
             </div>
             <div className="row pb-120">
               <div className="col-lg-8 col-md-10">
-                <form action="#">
+                <form action="#" onSubmit={handleSubmit}>
                   <div className="payment-details">
                     <div className="top-area">
                       <h6>Confirm account & amount</h6>
                       <div className="right">
-                        <Link href="#">
+                        <Link href="/withdraw-money/step-1">
                           <i className="icon-h-edit"></i> Edit{" "}
                         </Link>
                       </div>
@@ -59,39 +94,40 @@ const StepThree = () => {
                           </li>
                           <li>
                             <span>Account</span>
-                            <b>**** **** **** 1182</b>
+                            <b>{account}</b>
                           </li>
                           <li>
                             <span>You will receive</span>
                             <b>{amount} {currency}</b>
-                          </li>
-                          <li>
-                            <span>Fee</span>
-                            <b>1 {currency}</b>
-                          </li>
-                          <li>
-                            <span>E-mail</span>
-                            <b>felicia.reid@example.com</b>
                           </li>
                         </ul>
                       </div>
                     </div>
                   </div>
                   <div className="checkbox-area mt-40 d-flex align-items-center justify-content-center">
-                    <input type="checkbox" id="accept" name="accept" />
+                    <input
+                      type="checkbox"
+                      id="accept"
+                      name="accept"
+                      checked={accepted}
+                      onChange={(e) => setAccepted(e.target.checked)}
+                    />
                     <label htmlFor="accept">
                       I accept <Link href="#">terms of use</Link>
                     </label>
                   </div>
+                  <p className="text-center mdr mt-3 text-warning">
+                    Your withdrawal will be reviewed by an admin and approved or
+                    declined before funds are released.
+                  </p>
                   <div className="footer-area mt-40">
                     <Link href="/withdraw-money/step-2">Previous Step</Link>
-                    <Link
-                      href="#"
-                      className="active"
-                      data-bs-toggle="modal"
-                      data-bs-target="#congratulationsMod">
-                      Next
-                    </Link>
+                    <button
+                      type="submit"
+                      className={`active ${loading ? "opacity-50" : ""}`}
+                      disabled={loading || !accepted}>
+                      {loading ? "Processing..." : "Submit Withdrawal"}
+                    </button>
                   </div>
                 </form>
               </div>

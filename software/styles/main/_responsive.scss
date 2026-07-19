@@ -613,6 +613,11 @@
   .dashboard-section.deposit-money .table-area {
     padding: 30px;
   }
+  .dashboard-section.deposit-money .card-area .bank-card,
+  .dashboard-section.withdraw-money .card-area .bank-card {
+    flex: 0 0 calc(50% - 10px);
+    min-width: 150px;
+  }
   .dashboard-section.pay.receive-3 .attach-documents .file-upload .file {
     margin-bottom: 55px;
     .file-custom2 {
@@ -890,6 +895,11 @@
   .dashboard-section.deposit-money .table-area {
     padding: 15px;
   }
+  .dashboard-section.deposit-money .card-area .bank-card,
+  .dashboard-section.withdraw-money .card-area .bank-card {
+    flex: 0 0 100%;
+    min-width: 100%;
+  }
   .dashboard-section.exchange .side-area .deposit-details li {
     display: grid;
   }
@@ -920,5 +930,52 @@
   }
   .dashboard-section.pay.step .main-content .choose-recipient .recipient-list {
     margin-bottom: 15px;
+  }
+  .dashboard-section.invest {
+    .invest-card {
+      padding: 20px;
+      .invest-card-header {
+        flex-direction: column;
+        text-align: center;
+        gap: 12px;
+        .invest-icon {
+          width: 56px;
+          height: 56px;
+        }
+        .invest-info {
+          h6 {
+            font-size: 18px;
+          }
+        }
+      }
+      .send-banance {
+        padding: 16px;
+        .profit-summary {
+          grid-template-columns: 1fr;
+          gap: 12px;
+          .profit-item {
+            padding: 12px 16px;
+            .profit-value {
+              font-size: 18px;
+            }
+          }
+        }
+      }
+    }
+    .side-area {
+      padding: 20px;
+      margin-top: 20px;
+      .side-area-header {
+        h6 {
+          font-size: 16px;
+        }
+      }
+    }
+    .footer-area {
+      flex-direction: column;
+      .cmn-btn {
+        width: 100%;
+      }
+    }
   }
 }

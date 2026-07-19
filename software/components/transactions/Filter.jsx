@@ -12,13 +12,18 @@ const balance = [
   { id: 3, name: "Balance" },
 ];
 
-const filters = [
-  { id: 1, name: "Filters 1" },
-  { id: 2, name: "Filters 2" },
-  { id: 3, name: "Filters 3" },
+const transactionTypes = [
+  { id: "all", name: "All Types" },
+  { id: "deposit", name: "Deposits" },
+  { id: "withdrawal_request", name: "Withdrawals" },
+  { id: "investment", name: "Investments" },
+  { id: "send", name: "Send Money" },
+  { id: "receive", name: "Receive Money" },
 ];
 
-const Filter = () => {
+const Filter = ({ selectedType, onTypeChange }) => {
+  const selectedTypeItem = transactionTypes.find(t => t.id === selectedType) || transactionTypes[0];
+
   return (
     <div className="filters-item">
       <div className="single-item">
@@ -30,8 +35,13 @@ const Filter = () => {
         <Select data={balance} btn="border" />
       </div>
       <div className="single-item">
-        {/* Select */}
-        <Select data={filters} btn="border" />
+        {/* Transaction Type Filter */}
+        <Select
+          data={transactionTypes}
+          btn="border"
+          value={selectedTypeItem}
+          onChange={(item) => onTypeChange?.(item?.id || "all")}
+        />
       </div>
       <div className="single-item">
         <button>Clear Filters</button>

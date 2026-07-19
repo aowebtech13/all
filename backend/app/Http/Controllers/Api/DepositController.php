@@ -34,6 +34,13 @@ class DepositController extends Controller
         return response()->json($deposits);
     }
 
+    public function depositBalance(Request $request)
+    {
+        return response()->json([
+            'balance' => $request->user()->balance
+        ]);
+    }
+
     public function verifyPaystack(Request $request)
     {
         $request->validate([
@@ -107,7 +114,6 @@ class DepositController extends Controller
 
                 // Increment user balance
                 $user->increment('balance', $usdAmount);
-                $user->checkAndSendAccountVerificationNotification();
 
                 Log::info("Paystack deposit successful for User ID: {$user->id}, Amount: ${$usdAmount}, Ref: {$reference}");
 
@@ -205,7 +211,6 @@ class DepositController extends Controller
                 ]);
 
                 $user->increment('balance', $usdAmount);
-                $user->checkAndSendAccountVerificationNotification();
 
                 Log::info("Paystack deposit successful via Webhook for User ID: {$user->id}, Amount: ${$usdAmount}, Ref: {$reference}");
 

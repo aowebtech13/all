@@ -13,7 +13,7 @@
 <div class="flex gap-2 mb-6">
     <a href="{{ route('admin.deposits', ['status' => 'pending']) }}" class="btn {{ $status === 'pending' ? 'btn-primary text-white' : 'btn-ghost bg-white border-slate-200' }} rounded-xl px-6 font-black text-sm uppercase tracking-widest">Pending</a>
     <a href="{{ route('admin.deposits', ['status' => 'completed']) }}" class="btn {{ $status === 'completed' ? 'bg-emerald-500 hover:bg-emerald-600 text-white border-none' : 'btn-ghost bg-white border-slate-200' }} rounded-xl px-6 font-black text-sm uppercase tracking-widest">Approved</a>
-    <a href="{{ route('admin.deposits', ['status' => 'cancelled']) }}" class="btn {{ $status === 'cancelled' ? 'bg-rose-500 hover:bg-rose-600 text-white border-none' : 'btn-ghost bg-white border-slate-200' }} rounded-xl px-6 font-black text-sm uppercase tracking-widest">Cancelled</a>
+    <a href="{{ route('admin.deposits', ['status' => 'failed']) }}" class="btn {{ $status === 'failed' ? 'bg-rose-500 hover:bg-rose-600 text-white border-none' : 'btn-ghost bg-white border-slate-200' }} rounded-xl px-6 font-black text-sm uppercase tracking-widest">Declined</a>
 </div>
 
 <div class="bg-white rounded-3xl border border-slate-200 overflow-hidden shadow-sm">
@@ -71,7 +71,7 @@
                             $statusClasses = [
                                 'completed' => 'bg-emerald-50 text-emerald-600',
                                 'pending' => 'bg-amber-50 text-amber-600',
-                                'cancelled' => 'bg-rose-50 text-rose-600'
+                                'failed' => 'bg-rose-50 text-rose-600'
                             ][$deposit->status] ?? 'bg-slate-50 text-slate-600';
                         @endphp
                         <span class="badge {{ $statusClasses }} border-none font-black uppercase text-[13px] tracking-widest px-2 py-1 h-auto rounded-md">{{ $deposit->status }}</span>
@@ -81,18 +81,21 @@
                     </td>
                     <td class="text-right px-8">
                         @if($deposit->status === 'pending')
-                        <div class="flex justify-end gap-2">
-                            <form action="{{ route('admin.deposits.update', $deposit->id) }}" method="POST">
+                        <div class="flex justify-end items-center gap-2">
+                            <form action="{{ route('admin.deposits.update', $deposit->id) }}" method="POST" class="flex items-center gap-2">
                                 @csrf
                                 <input type="hidden" name="status" value="completed">
-                                <button class="btn bg-emerald-500 hover:bg-emerald-600 text-white border-none btn-sm rounded-lg px-4 font-black text-[14px] uppercase tracking-widest">Approve</button>
+                                <button class="btn bg-emerald-500 hover:bg-emerald-600 text-white border-none btn-sm rounded-lg px-4 font-black text-[14px] uppercase tracking-widest">Accept</button>
                             </form>
-                            <form action="{{ route('admin.deposits.update', $deposit->id) }}" method="POST">
+                            <form action="{{ route('admin.deposits.update', $deposit->id) }}" method="POST" class="flex items-center gap-2" onsubmit="return confirm('Decline this deposit? The user will NOT be credited.');">
                                 @csrf
-                                <input type="hidden" name="status" value="cancelled">
-                                <button class="btn bg-white border-slate-200 hover:bg-slate-50 text-slate-600 btn-sm rounded-lg px-4 font-black text-[14px] uppercase tracking-widest shadow-sm">Cancel</button>
+                                <input type="hidden" name="status" value="failed">
+                                <input type="text" name="admin_note" placeholder="Reason (optional)" class="input input-bordered input-sm w-32 rounded-lg">
+                                <button class="btn bg-rose-500 hover:bg-rose-600 text-white border-none btn-sm rounded-lg px-4 font-black text-[14px] uppercase tracking-widest">Decline</button>
                             </form>
                         </div>
+                        @else
+                        <span class="text-slate-400 font-bold text-sm uppercase tracking-widest">{{ $deposit->status }}</span>
                         @endif
                     </td>
                 </tr>

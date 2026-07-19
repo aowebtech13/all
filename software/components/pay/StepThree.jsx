@@ -11,16 +11,11 @@ import { useAuth } from "@/hooks/useAuth";
 import { useRouter } from "next/navigation";
 
 
-const REQUIRED_AMOUNT = 5000;
-
 const StepThree = () => {
   const [proofFile, setProofFile] = useState(null);
   const [error, setError] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
-
-
-  const amountLabel = `₦${REQUIRED_AMOUNT}`;
 
   const { user, loading } = useAuth({ middleware: "auth" });
   const router = useRouter();
@@ -55,12 +50,11 @@ const StepThree = () => {
     setIsSubmitting(true);
     try {
       const formData = new FormData();
-      formData.append("amount", REQUIRED_AMOUNT);
       formData.append("method", "Bank Transfer");
       formData.append("receipt", proofFile);
       formData.append(
         "description",
-        `Memebership Fee (${amountLabel}) via ECOBANK Ally-b Entrepreneurial Network (Acct 2080100211).`
+        `Deposit via ECOBANK Ally-b Entrepreneurial Network (Acct 2080100211).`
       );
 
       const res = await axios.post("/api/deposit", formData, {
@@ -116,22 +110,18 @@ const StepThree = () => {
 
             <div className="payment-details">
               <div className="top-area">
-                <h6>Memebership Fee</h6>
+                <h6>Deposit</h6>
               </div>
               <div className="row">
                 <div className="col-xl-6">
                   <ul className="details-list">
-                    <li>
-                      <span>You Send</span>
-                      <b>{amountLabel}</b>
-                    </li>
                     <li>
                       <span>Fee</span>
                       <b>Free</b>
                     </li>
                     <li>
                       <span>Purpose</span>
-                      <b>Account Verification</b>
+                      <b>Account Funding</b>
                     </li>
                   </ul>
                 </div>

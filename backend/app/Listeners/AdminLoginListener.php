@@ -3,17 +3,14 @@
 namespace App\Listeners;
 
 use Illuminate\Auth\Events\Login;
-use App\Mail\AdminLoginNotification;
-use Illuminate\Support\Facades\Mail;
 
 class AdminLoginListener
 {
     public function handle(Login $event): void
     {
-        $user = $event->user;
-
-        if ($user->role === 'admin') {
-            Mail::to($user->email)->send(new AdminLoginNotification($user, request()->ip()));
-        }
+        // Email/SMTP delivery on admin login intentionally disabled.
+        // Admin login continues to work normally; this listener now performs no action.
+        return;
     }
 }
+

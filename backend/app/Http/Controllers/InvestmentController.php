@@ -115,6 +115,63 @@ class InvestmentController extends Controller
             ? $computedBalance
             : (float) $user->balance;
 
+        $totalDeposits = (float) $user->transactions()
+            ->where('type', 'deposit')
+            ->where('status', 'completed')
+            ->sum('amount');
+
+        $totalWithdrawals = (float) $user->transactions()
+            ->where('type', 'withdrawal_request')
+            ->where('status', 'completed')
+            ->sum('amount');
+
+        // Build a unified activity list from transactions, investments, and withdrawals
+        $transactions = $user->transactions()->latest()->get()->map(function ($t) {
+            return [
+                'id' => $t->id,
+                'type' => 'transaction',
+                'category' => $t->type,
+                'name' => ucfirst($t->type),
+                'description' => $t->description ?? ($t->method ? "Via {$t->method}" : ''),
+                'date' => $t->created_at,
+                'status' => $t->status,
+                'amount' => (float) $t->amount,
+            ];
+        });
+
+        $investments = $user->investments()->with('plan')->latest('start_date')->get()->map(function ($inv) {
+            return [
+                'id' => $inv->id,
+                'type' => 'investment',
+                'category' => 'investment',
+                'name' => 'Investment',
+                'description' => $inv->plan?->name ?? "Plan #{$inv->investment_plan_id}",
+                'date' => $inv->start_date ?? $inv->created_at,
+                'status' => $inv->status,
+                'amount' => -(float) $inv->amount,
+            ];
+        });
+
+        $withdrawals = $user->withdrawals()->latest()->get()->map(function ($w) {
+            return [
+                'id' => $w->id,
+                'type' => 'withdrawal',
+                'category' => 'withdrawal',
+                'name' => 'Withdrawal',
+                'description' => $w->method ?? ($w->details ?? ''),
+                'date' => $w->created_at,
+                'status' => $w->status,
+                'amount' => -(float) $w->amount,
+            ];
+        });
+
+        $allActivity = $transactions
+            ->concat($investments)
+            ->concat($withdrawals)
+            ->sortByDesc('date')
+            ->values()
+            ->take(50);
+
         return response()->json([
             'stats' => [
                 'balance' => $balance,
@@ -122,15 +179,26 @@ class InvestmentController extends Controller
                 'total_invested' => $user->total_invested,
                 'active_investments_count' => $user->investments()->where('status', 'active')->count(),
             ],
+            'total_deposits' => $totalDeposits,
+            'total_withdrawals' => abs($totalWithdrawals),
             'recent_transactions' => $user->transactions()->latest()->limit(10)->get(),
+            'recent_deposits' => $user->transactions()->where('type', 'deposit')->latest()->limit(5)->get(),
+            'recent_withdrawals' => $user->transactions()->where('type', 'withdrawal_request')->latest()->limit(5)->get(),
             'active_investments' => $user->investments()->where('status', 'active')->with('plan')->get(),
+            'all_activity' => $allActivity,
         ]);
     }
 
-    public function getTransactions()
+    public function getTransactions(Request $request)
     {
         $user = Auth::user();
-        return response()->json($user->transactions()->latest()->paginate(20));
+        $query = $user->transactions()->latest();
+
+        if ($request->has('type')) {
+            $query->where('type', $request->type);
+        }
+
+        return response()->json($query->paginate(20));
     }
 
     public function getInvestments()

@@ -13,21 +13,21 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
-
-        $middleware->statefulApi();
+        
+        // 💡 Note: $middleware->statefulApi() has been removed to prevent
+        // cookie validation conflicts with your Next.js Bearer Token setup.
 
         $middleware->alias([
-
             'verified' => \App\Http\Middleware\EnsureEmailIsVerified::class,
             'ensure.email.verified' => \App\Http\Middleware\EnsureEmailIsVerified::class,
             'admin' => \App\Http\Middleware\AdminMiddleware::class,
-            'ensure.verification.deposit' => \App\Http\Middleware\EnsureUserHasVerifiedDeposit::class,
         ]);
 
-        // Make CORS work for all API endpoints (including /api/login preflight OPTIONS)
-        $middleware->appendToGroup('api', [\App\Http\Middleware\CorsForApi::class]);
-
-
+        $middleware->replace(
+            \Illuminate\Foundation\Http\Middleware\VerifyCsrfToken::class,
+            \App\Http\Middleware\VerifyCsrfToken::class
+        );
+        
     })
     ->withSchedule(function (Schedule $schedule) {
         $schedule->command('investments:process')->everyMinute()->withoutOverlapping();
@@ -35,4 +35,3 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withExceptions(function (Exceptions $exceptions): void {
         //
     })->create();
-
