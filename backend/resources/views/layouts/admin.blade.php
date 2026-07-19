@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('title') - Ally-b Admin</title>
+    <title>@yield('title') - Enterprise Admin</title>
     <link href="https://cdn.jsdelivr.net/npm/daisyui@4.7.2/dist/full.min.css" rel="stylesheet" type="text/css" />
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -63,7 +63,7 @@
                     </label>
                 </div>
                 <div class="flex-1 px-4">
-                    <span class="text-xl font-bold text-slate-900">Ally-b</span>
+                    <span class="text-xl font-bold text-slate-900">Enterprise</span>
                 </div>
             </div>
 
@@ -92,8 +92,8 @@
             <aside class="w-64 min-h-screen glass-sidebar flex flex-col">
                 <div class="p-6 mb-2">
                     <div class="flex items-center gap-2">
-                        <img src="https://Ally-b.com/images/logo.png" alt="Ally-b" class="h-10 w-auto">
-                        <span class="font-bold text-lg tracking-tight">Ally-b</span>
+                        <img src="https://Enterprise.com/images/logo.png" alt="Enterprise" class="h-10 w-auto">
+                        <span class="font-bold text-lg tracking-tight">Enterprise</span>
                     </div>
                 </div>
 

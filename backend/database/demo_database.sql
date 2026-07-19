@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 9.4.0, for macos15.4 (arm64)
 --
--- Host: localhost    Database: Ally-b_partners
+-- Host: localhost    Database: Enterprise_partners
 -- ------------------------------------------------------
 -- Server version	9.4.0
 

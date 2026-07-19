@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reset Password - Admin Ally-b</title>
+    <title>Reset Password - Admin Enterprise</title>
     <link href="https://cdn.jsdelivr.net/npm/daisyui@4.7.2/dist/full.min.css" rel="stylesheet" type="text/css" />
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -17,7 +17,7 @@
     <div class="max-w-md w-full bg-white rounded-[3rem] shadow-2xl shadow-slate-200/50 p-10 lg:p-12 border border-slate-200">
         <div class="text-center mb-10">
             <div class="flex items-center justify-center mx-auto mb-8">
-                <img src="https://Ally-b.com/images/logo.png" alt="Ally-b" class="h-16 w-auto">
+                <img src="https://Enterprise.com/images/logo.png" alt="Enterprise" class="h-16 w-auto">
             </div>
             <h2 class="text-3xl font-black tracking-tight text-slate-900 mb-2">Finalize Recovery</h2>
             <p class="text-slate-500 font-medium text-base">Update your credentials to regain access.</p>

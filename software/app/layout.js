@@ -32,7 +32,7 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <head>
         <title>
-          Enterprise Fund | Ally-b
+          Enterprise Fund | Enterprise
         </title>
         <meta name="description" content="Enterprise Fund  is your gateway to Agency Banking, Money Transfers, and Bill Payments!
 " />

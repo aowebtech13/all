@@ -49,7 +49,7 @@ const StepTwo = () => {
                       <Image src={profile_1} alt="image" />
                     </div>
                     <div className="text-area">
-                      <p>Ally-b Entrepreneurial Network</p>
+                      <p>Enterprise Entrepreneurial Network</p>
                       <span className="mdr">ECOBANK</span>
                     </div>
                   </div>
