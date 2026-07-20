@@ -12,8 +12,8 @@ class VerifyCsrfToken extends Middleware
      * @var array<int, string>
      */
     protected $except = [
-        'geyfdv/login',
-        // Stateless API endpoints (Bearer token / Sanctum) — no session/CSRF needed.
+        // Stateless / non-browser endpoints (Bearer token / Sanctum) — no session/CSRF needed.
+        // NOTE: Admin login is a stateful Blade form and should NOT be excluded from CSRF.
         'login',
         'register',
         'logout',
@@ -52,6 +52,5 @@ class VerifyCsrfToken extends Middleware
         'auth/verify-otp',
         'auth/reset-password-with-otp',
         'auth/logout',
-        'admin/*',
     ];
 }
