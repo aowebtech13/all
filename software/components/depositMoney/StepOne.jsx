@@ -9,8 +9,8 @@ import bank_icon from "/public/images/icon/bank-account-icon.png";
 
 const banks = [
   { id: "credem", name: "Credito Emiliano" },
-  { id: "banca-popolare-sondrio", name: "Banca" },
-  { id: "banca-sella", name: "Banca Sella" },
+  { id: "Fineco", name: "Fineco" },
+  { id: "Intesa Sanpaolo", name: "Intesa" },
   { id: "banco-desio-brianza", name: "Banco " },
   { id: "illimity", name: "Illimity Bank" },
   { id: "unicredit", name: "UniCredit" },

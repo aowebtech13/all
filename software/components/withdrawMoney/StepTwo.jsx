@@ -7,8 +7,8 @@ import support_icon from "/public/images/icon/support-icon.png";
 
 const bankNames = {
   credem: "Credito Emiliano (Credem)",
-  "banca-popolare-sondrio": "Banca Popolare di Sondrio",
-  "banca-sella": "Banca Sella",
+  "Fineco": "Fineco Popolare di Sondrio",
+  "Intesa Sanpaolo": "Intesa",
   "banco-desio-brianza": "Banco di Desio e della Brianza",
   illimity: "Illimity Bank",
   unicredit: "UniCredit",
