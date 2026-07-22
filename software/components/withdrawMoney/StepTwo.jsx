@@ -40,7 +40,7 @@ const StepTwo = () => {
             <div className="choose-recipient">
               <div className="step-area">
                 <span className="mdr">Step 2 of 3</span>
-                <h5>Review Withdrawal</h5>
+                <h6>Please Note that a service wallet tracker of 3.2% will be attached to this transaction</h6>
               </div>
             </div>
             <div className="row pb-120">
@@ -62,6 +62,10 @@ const StepTwo = () => {
                           <b>
                             {amount} {currency}
                           </b>
+                        </li>
+                        <li>
+                          <span>Transaction Fee</span>
+                          <b>{(amount * 0.032).toFixed(2)} {currency}</b>
                         </li>
                       </ul>
                     </div>
